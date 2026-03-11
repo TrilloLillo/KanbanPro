@@ -1,10 +1,15 @@
+require("dotenv").config();
 const express = require("express");
 const { engine } = require("express-handlebars");
 const fs = require("fs");
 const path = require("path");
+const { server } = require("./server");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
 
 // --- CONFIGURACIÓN DE MOTOR DE VISTAS (HBS) ---
 app.engine("hbs", engine({ extname: ".hbs" }));

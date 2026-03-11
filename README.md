@@ -1,98 +1,86 @@
-# 💼 EF- M6 Proyecto integrador Sprint 1
-## Proyecto: "KanbanPro" - Kick-off del Sprint 1
+# 💼 EF- M7 Proyecto integrador Sprint 2
+## Proyecto: "KanbanPro" - Kick-off del Sprint 2
 
-### Asunto: 📧 ¡Luz verde para el prototipo funcional de KanbanPro!
+Asunto: 📧 ¡Prototipo aprobado! Iniciando Fase 2: Arquitectura de Datos
 
-#### De: David, Product Manager de KanbanPro Para: El Equipo de Desarrollo (Tú)
+De: David, Product Manager de KanbanPro Para: El Equipo de Desarrollo (Tú)
 
 ¡Hola equipo!
 
-Estoy muy emocionado de dar inicio al desarrollo de KanbanPro. Para arrancar con fuerza, necesitamos construir un prototipo funcional que nos permita validar tanto el diseño visual como la experiencia de usuario principal.
+Excelentes noticias: a los stakeholders les encantó el prototipo visual del Sprint 1. La navegación es clara y el diseño del dashboard es exactamente lo que buscábamos. ¡Buen trabajo!
 
-El objetivo de este primer sprint es crear una aplicación navegable que no solo luzca como el producto final, sino que también demuestre la funcionalidad clave: la capacidad de añadir una tarea y que esta persista. Para esta fase inicial, utilizaremos un archivo JSON local en el servidor como nuestra "base de datos". Esto nos dará una prueba de concepto sólida sobre la cual construir.
+Ahora es el momento de pasar a la siguiente fase. Con el diseño validado, tenemos luz verde para construir la capa de persistencia. En este sprint, nos centraremos exclusivamente en la base de datos. Necesitamos definir cómo se estructurará, almacenará y relacionará toda la información de nuestros usuarios y sus proyectos.
 
-¡Vamos a crear la primera versión funcional de KanbanPro!
+Este es un paso crítico y fundamental para el éxito de KanbanPro. Por ahora, no se preocupen por conectar esto a la interfaz web; el objetivo es crear un modelo de datos sólido y probarlo de forma aislada para garantizar su integridad.
+
+¡A construir la base de nuestro proyecto!
 
 Saludos, David
 
-### Resumen del Sprint 1: Prototipo Funcional con Persistencia en Archivos
+Resumen del Sprint 2: Modelo de Datos y Capa de Persistencia
 
-#### Objetivo del Sprint: Construir la aplicación web inicial renderizada desde el servidor, incluyendo la interfaz de usuario, la navegación y un mecanismo de persistencia de datos local utilizando el sistema de archivos de Node.js y un archivo JSON.
+## Objetivo del Sprint: Crear la arquitectura completa de la base de datos utilizando PostgreSQL y el ORM Sequelize. El entregable será un conjunto de modelos de datos funcionales y scripts para crear, poblar y probar la base de datos, garantizando que la lógica de negocio esté correctamente representada. La interfaz web visible no sufrirá cambios y seguirá mostrando datos simulados.
 
-#### Historias de Usuario a Implementar
+### Historias Técnicas a Implementar
 
-##### HU-01: Navegación y Estructura Visual
+### HT-01: Definición de la Arquitectura de Datos con ORM
 
-    Como un visitante,
+    Como desarrollador,
 
-    Quiero poder navegar a las páginas de Inicio, Registro e Inicio de Sesión,
+    Necesito definir los modelos y sus relaciones usando Sequelize,
 
-    Para entender la estructura del sitio y cómo acceder a la aplicación.
+    Para que la aplicación tenga una forma estructurada y predecible de manejar los datos de Usuarios, Tableros, Listas y Tarjetas.
 
-Criterios de Aceptación:
+### Criterios de Aceptación:
 
-    ✅ Debe existir una ruta GET / que renderice una vista home.hbs.
+    ✅ Se deben instalar las dependencias sequelize, pg y pg-hstore.
 
-    ✅ Deben existir las rutas GET /register y GET /login que rendericen sus vistas correspondientes.
+    ✅ Se debe configurar y verificar una conexión exitosa a la base de datos PostgreSQL.
 
-    ✅ Todas las vistas deben heredar de un layout.hbs principal para mantener un diseño consistente.
+    ✅ Deben existir los archivos de modelo para Usuario, Tablero, Lista y Tarjeta en una carpeta /models.
 
-##### HU-02: Visualización de Datos Persistentes en el Dashboard
+    ✅ Se deben establecer correctamente las relaciones "uno a muchos" (hasMany / belongsTo) entre los modelos:
 
-    Como un usuario (simulado),
+        Usuario ↔ Tablero
 
-    Quiero que el dashboard cargue y muestre los datos del proyecto desde una fuente de datos permanente,
+        Tablero ↔ Lista
 
-    Para que la información sea consistente cada vez que visito la página.
+        Lista ↔ Tarjeta
 
-Criterios de Aceptación:
+### HT-02: Creación y Poblado Automatizado de la Base de Datos
 
-    ✅ Debe existir un archivo data.json en el proyecto que contenga la estructura inicial de los tableros, listas y tarjetas.
+    Como desarrollador,
 
-    ✅ La ruta GET /dashboard debe leer el archivo data.json utilizando el módulo fs de Node.js (fs.readFileSync).
+    Necesito un script que cree el esquema de la base de datos y la pueble con datos de prueba,
 
-    ✅ El contenido leído (string) debe ser parseado (JSON.parse) a un objeto de JavaScript.
+    Para disponer de un entorno de desarrollo consistente y poder probar la lógica con datos realistas.
 
-    ✅ Este objeto debe pasarse a la vista dashboard.hbs, la cual usará {{#each}} para renderizar dinámicamente el contenido.
+### Criterios de Aceptación:
 
-##### HU-03: Creación y Persistencia de Nuevas Tareas
+    ✅ El método sequelize.sync() debe ser utilizado para crear las tablas en la base de datos a partir de los modelos.
 
-    Como un usuario (simulado),
+    ✅ Debe existir un script separado (ej: seed.js) que, al ejecutarse (node seed.js), popule las tablas con datos de ejemplo (al menos 2 usuarios, 3 tableros y varias listas/tarjetas).
 
-    Quiero poder añadir una nueva tarjeta a una lista a través de un formulario,
+### HT-03: Verificación de la Lógica del Modelo de Datos
 
-    Para que mi nueva tarea quede guardada y sea visible si recargo la página.
+    Como desarrollador,
 
-Criterios de Aceptación:
+    Necesito scripts de prueba para realizar operaciones CRUD directamente en la base de datos,
 
-    ✅ La vista dashboard.hbs debe incluir un formulario HTML (<form method="POST">) para añadir una nueva tarjeta.
+    Para asegurar la integridad del modelo y sus relaciones antes de exponerlos a través de una API.
 
-    ✅ El formulario debe enviar los datos a una ruta POST (ej: /nueva-tarjeta).
+### Criterios de Aceptación:
 
-    ✅ La lógica de esta ruta POST debe seguir el ciclo "Leer-Modificar-Escribir":
+    ✅ Debe existir un script separado (ej: test-crud.js).
 
-        Leer y parsear el contenido actual de data.json.
+    ✅ Este script, al ejecutarse, debe demostrar de forma aislada (sin usar Express) al menos una operación de cada tipo:
 
-        Modificar el objeto de datos, añadiendo la nueva tarjeta.
+        Crear: Crear una nueva Tarjeta y asociarla a una Lista existente.
 
-        Convertir el objeto modificado de vuelta a un string JSON (JSON.stringify).
+        Leer: Leer un Tablero incluyendo sus Listas y Tarjetas asociadas (usando include).
 
-        Escribir el nuevo string sobreescribiendo el archivo data.json (fs.writeFileSync).
+        Actualizar: Modificar el título de una Tarjeta o Lista.
 
-    ✅ Tras guardar, la ruta debe redirigir (res.redirect) al usuario de vuelta al /dashboard.
+        Borrar: Eliminar una Tarjeta o Lista.
 
-### Requisitos Técnicos y Estructura
-
-    Entorno: Inicializa un proyecto de Node.js e instala express y hbs.
-
-    Estructura de Carpetas: El proyecto debe tener una estructura organizada (views/, public/, app.js, data.json).
-
-    Conceptos a Aplicar:
-
-        Node.js y Express: Servidor, ruteo (GET, POST), middleware (express.urlencoded).
-
-        Handlebars (hbs): Motor de vistas, layouts y helpers ({{#each}}).
-
-        Módulo fs (File System): fs.readFileSync y fs.writeFileSync.
-
-        JSON: JSON.parse y JSON.stringify.
+    ✅ La salida en la consola del script debe verificar que las operaciones se completaron con éxito.
