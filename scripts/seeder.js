@@ -9,8 +9,8 @@ const poblarBaseDeDatos = async () => {
 
     // 2. Usuarios (David el PM y un Desarrollador de prueba)
     const usuarios = await Usuario.bulkCreate([
-      { name: 'David PM', email: 'david@kanbanpro.com'},
-      { name: 'Dev Senior', email: 'dev@kanbanpro.com'}
+      { name: 'David PM', email: 'david@kanbanpro.com', password: 'admin123' },
+      { name: 'Dev Senior', email: 'dev@kanbanpro.com', password: 'dev123' }
     ]);
 
     const [david, dev] = usuarios;

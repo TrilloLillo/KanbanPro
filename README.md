@@ -1,86 +1,89 @@
-# 💼 EF- M7 Proyecto integrador Sprint 2
-## Proyecto: "KanbanPro" - Kick-off del Sprint 2
 
-Asunto: 📧 ¡Prototipo aprobado! Iniciando Fase 2: Arquitectura de Datos
+# 💼 EF-M8 Proyecto integrador Sprint 3
+## Proyecto: "KanbanPro" - Kick-off del Sprint 3 (Fase Final)
 
-De: David, Product Manager de KanbanPro Para: El Equipo de Desarrollo (Tú)
+### Resumen del Sprint 3: API RESTful, Seguridad y Funcionalidad Completa
 
-¡Hola equipo!
+Objetivo del Sprint: Desarrollar la API RESTful completa para gestionar todos los recursos de la aplicación, implementar un sistema de autenticación seguro con JWT y, finalmente, conectar las vistas de Handlebars a la base de datos a través de esta nueva capa de API para lograr una aplicación totalmente funcional.
 
-Excelentes noticias: a los stakeholders les encantó el prototipo visual del Sprint 1. La navegación es clara y el diseño del dashboard es exactamente lo que buscábamos. ¡Buen trabajo!
+Historias de Usuario y Técnicas a Implementar
 
-Ahora es el momento de pasar a la siguiente fase. Con el diseño validado, tenemos luz verde para construir la capa de persistencia. En este sprint, nos centraremos exclusivamente en la base de datos. Necesitamos definir cómo se estructurará, almacenará y relacionará toda la información de nuestros usuarios y sus proyectos.
+### HU-04: Gestión de Cuentas de Usuario
 
-Este es un paso crítico y fundamental para el éxito de KanbanPro. Por ahora, no se preocupen por conectar esto a la interfaz web; el objetivo es crear un modelo de datos sólido y probarlo de forma aislada para garantizar su integridad.
+    Como un nuevo usuario,
 
-¡A construir la base de nuestro proyecto!
+    Quiero poder registrarme en la aplicación con un email y contraseña,
 
-Saludos, David
+    Para crear una cuenta personal y segura.
 
-Resumen del Sprint 2: Modelo de Datos y Capa de Persistencia
+    Como un usuario ya registrado,
 
-## Objetivo del Sprint: Crear la arquitectura completa de la base de datos utilizando PostgreSQL y el ORM Sequelize. El entregable será un conjunto de modelos de datos funcionales y scripts para crear, poblar y probar la base de datos, garantizando que la lógica de negocio esté correctamente representada. La interfaz web visible no sufrirá cambios y seguirá mostrando datos simulados.
+    Quiero poder iniciar sesión con mis credenciales,
 
-### Historias Técnicas a Implementar
+    Para acceder a mis tableros de proyectos.
 
-### HT-01: Definición de la Arquitectura de Datos con ORM
+Criterios de Aceptación:
 
-    Como desarrollador,
+    ✅ Se deben instalar las dependencias jsonwebtoken y bcryptjs.
 
-    Necesito definir los modelos y sus relaciones usando Sequelize,
+    ✅ Debe existir un endpoint POST /api/auth/register que cree un nuevo usuario y guarde su contraseña de forma segura (hasheada con bcryptjs).
 
-    Para que la aplicación tenga una forma estructurada y predecible de manejar los datos de Usuarios, Tableros, Listas y Tarjetas.
+    ✅ Debe existir un endpoint POST /api/auth/login que verifique las credenciales del usuario y, si son correctas, genere y devuelva un JSON Web Token (JWT).
 
-### Criterios de Aceptación:
-
-    ✅ Se deben instalar las dependencias sequelize, pg y pg-hstore.
-
-    ✅ Se debe configurar y verificar una conexión exitosa a la base de datos PostgreSQL.
-
-    ✅ Deben existir los archivos de modelo para Usuario, Tablero, Lista y Tarjeta en una carpeta /models.
-
-    ✅ Se deben establecer correctamente las relaciones "uno a muchos" (hasMany / belongsTo) entre los modelos:
-
-        Usuario ↔ Tablero
-
-        Tablero ↔ Lista
-
-        Lista ↔ Tarjeta
-
-### HT-02: Creación y Poblado Automatizado de la Base de Datos
+### HT-05: Seguridad de la API
 
     Como desarrollador,
 
-    Necesito un script que cree el esquema de la base de datos y la pueble con datos de prueba,
+    Necesito proteger los endpoints de la aplicación,
 
-    Para disponer de un entorno de desarrollo consistente y poder probar la lógica con datos realistas.
+    Para asegurar que solo los usuarios autenticados puedan acceder y modificar sus propios datos.
 
-### Criterios de Aceptación:
+Criterios de Aceptación:
 
-    ✅ El método sequelize.sync() debe ser utilizado para crear las tablas en la base de datos a partir de los modelos.
+    ✅ Se debe crear un middleware de autenticación que intercepte las peticiones.
 
-    ✅ Debe existir un script separado (ej: seed.js) que, al ejecutarse (node seed.js), popule las tablas con datos de ejemplo (al menos 2 usuarios, 3 tableros y varias listas/tarjetas).
+    ✅ El middleware debe verificar la existencia y validez de un JWT en el header Authorization: Bearer [token].
 
-### HT-03: Verificación de la Lógica del Modelo de Datos
+    ✅ Si el token es inválido o no existe, la API debe devolver un error 401 o 403.
 
-    Como desarrollador,
+    ✅ Todas las rutas de gestión de datos (tableros, listas, tarjetas) deben estar protegidas por este middleware.
 
-    Necesito scripts de prueba para realizar operaciones CRUD directamente en la base de datos,
+### HT-06: API RESTful para la Gestión de Proyectos
 
-    Para asegurar la integridad del modelo y sus relaciones antes de exponerlos a través de una API.
+    Como desarrollador de frontend (simulado),
 
-### Criterios de Aceptación:
+    Necesito un conjunto de endpoints RESTful para gestionar los recursos de la aplicación,
 
-    ✅ Debe existir un script separado (ej: test-crud.js).
+    Para poder construir una interfaz de usuario interactiva y desacoplada.
 
-    ✅ Este script, al ejecutarse, debe demostrar de forma aislada (sin usar Express) al menos una operación de cada tipo:
+Criterios de Aceptación:
 
-        Crear: Crear una nueva Tarjeta y asociarla a una Lista existente.
+    ✅ Se debe crear un router de Express para agrupar todas las rutas de la API (ej: /api).
 
-        Leer: Leer un Tablero incluyendo sus Listas y Tarjetas asociadas (usando include).
+    ✅ Se deben implementar todos los endpoints CRUD para los recursos principales:
 
-        Actualizar: Modificar el título de una Tarjeta o Lista.
+        Tableros: GET, POST, PUT, DELETE en /api/tableros.
 
-        Borrar: Eliminar una Tarjeta o Lista.
+        Listas: POST, PUT, DELETE en /api/tableros/:tableroId/listas.
 
-    ✅ La salida en la consola del script debe verificar que las operaciones se completaron con éxito.
+        Tarjetas: POST, PUT, DELETE en /api/listas/:listaId/tarjetas.
+
+    ✅ Todos estos endpoints deben usar los métodos de Sequelize para interactuar con la base de datos.
+
+    ✅ La API debe ser probada exhaustivamente con un cliente como Postman o Insomnia.
+
+### HU-07: Conexión de la Interfaz con Datos Reales
+
+    Como usuario con sesión iniciada,
+
+    Quiero que el dashboard me muestre mis tableros, listas y tarjetas reales guardados en la base de datos,
+
+    Para poder gestionar mi trabajo de forma efectiva.
+
+Criterios de Aceptación:
+
+    ✅ Las rutas de las vistas (ej: GET /dashboard) deben ser modificadas.
+
+    ✅ Dentro de estas rutas, se debe llamar a la nueva lógica de los controladores de la API para obtener los datos desde la base de datos usando Sequelize.
+
+    ✅ Los datos reales (ya no los simulados) deben ser pasados a las plantillas de Handlebars para su renderizado.
