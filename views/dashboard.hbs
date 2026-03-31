@@ -1,3 +1,331 @@
+<body class="bg-surface font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<div class="flex pt-24 min-h-screen">
+<aside class="hidden lg:flex flex-col gap-4 p-6 h-[calc(100vh-6rem)] w-72 m-4 rounded-[3rem] sticky top-24 left-0 bg-[#fefcf4] dark:bg-zinc-900 no-border shadow-[0_20px_40px_rgba(166,59,131,0.08)]">
+<div class="flex items-center gap-3 px-4 py-2">
+<div class="w-10 h-10 bg-primary-container rounded-2xl flex items-center justify-center text-white inner-pill-glow">
+<span class="material-symbols-outlined">cloud</span>
+</div>
+<div>
+<h2 class="text-lg font-black text-[#a63b83] font-headline leading-tight">KanbanPro</h2>
+<p class="text-[10px] text-zinc-400 font-semibold tracking-widest uppercase">Sweet Productivity</p>
+</div>
+</div>
+<div class="mt-8 flex flex-col gap-2">
+<div class="text-zinc-500 dark:text-zinc-400 px-6 py-3 hover:bg-[#dec8ff] hover:scale-105 transition-all duration-300 rounded-full cursor-pointer flex items-center gap-4">
+<span class="material-symbols-outlined">looks</span>
+<span class="font-semibold text-sm">Dashboard</span>
+</div>
+<div class="bg-[#fe84d0] text-white rounded-full shadow-[inset_0_4px_6px_rgba(255,255,255,0.4)] px-6 py-3 scale-105 flex items-center gap-4">
+<span class="material-symbols-outlined">grade</span>
+<span class="font-semibold text-sm">Tasks</span>
+</div>
+<div class="text-zinc-500 dark:text-zinc-400 px-6 py-3 hover:bg-[#dec8ff] hover:scale-105 transition-all duration-300 rounded-full cursor-pointer flex items-center gap-4">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-semibold text-sm">Projects</span>
+</div>
+<div class="text-zinc-500 dark:text-zinc-400 px-6 py-3 hover:bg-[#dec8ff] hover:scale-105 transition-all duration-300 rounded-full cursor-pointer flex items-center gap-4">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-semibold text-sm">Team</span>
+</div>
+</div>
+<div class="mt-auto p-4">
+<button class="w-full py-4 bg-gradient-to-br from-primary to-primary-container text-white font-bold rounded-full inner-pill-glow hover:scale-[1.02] transition-transform active:scale-95 flex items-center justify-center gap-2" onclick="addNewTask('todo')">
+<span class="material-symbols-outlined">add_circle</span>
+                New Sweet Task
+            </button>
+</div>
+</aside>
+<main class="flex-1 p-8 pt-4 overflow-x-auto custom-scrollbar">
+<header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="relative">
+<h1 class="text-5xl font-black font-headline text-on-surface tracking-tight mb-2">Summer Party Planning! 🍬</h1>
+<div class="flex items-center gap-2">
+<span class="bg-tertiary-container text-on-tertiary-container px-4 py-1.5 rounded-full text-xs font-bold inner-pill-glow">Active Project ✨</span>
+<div class="flex -space-x-3 ml-2">
+<img class="w-8 h-8 rounded-full border-2 border-surface" data-alt="avatar portrait of a young girl with pigtails in a sunny garden" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMXVcP1x_c2ZRxo17WlgUTzn047J3XbQfzM0xE-w4bVw2Paik7ZnqTIjf8ezI7kMW5E9m6wby4N20xm5O3lOhyZdQ4mk8e7PFoMHcHV9m0AeSzfvBe58dR1JXvlaYUtxCTZcZgjKVMLU3AhsjVpdyfE_mkfAHWf9hk18PGEe-xWRkp-2dXhPJ46Q43RwU0LXmhWStAkLlX22d7sV25c-IwnvKUkc53xJflF5GQJPGEFRO6XVg7qgFi6Bwp-FKzaYEWcioEg90UN7U"/>
+<img class="w-8 h-8 rounded-full border-2 border-surface" data-alt="avatar portrait of a person with stylish glasses and a bright yellow sweater" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSGad8iWHr_UWYiwJSDdsdtW7V0L-E5ok440MbbbcE1m3UuHaUj_cCM82fgDKOmIQKAZoGRCUx8X4tFq5HpETexC9_7hdrb87_FREgYT1mdD0QHUW5goG7jfD02k-m1gQj9fBeRn93qCPYHqHsLRwRJPxx8Um0dSacgKw0shEf1vEzQQ73ANMOOREIEKrEhHj6mcLwmE4Y4mCfT-ggKRyUDAgAj5qeISfEZ1miYiHtyLgO0NohmB4D_U-BPr3DvsbEKofMcNS0nw8"/>
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold flex items-center justify-center border-2 border-surface">+4</div>
+</div>
+</div>
+</div>
+<button class="bg-primary text-white font-bold px-8 py-4 rounded-full flex items-center gap-2 hover:scale-105 transition-all shadow-lg shadow-primary/20 inner-pill-glow" onclick="addNewTask('todo')">
+<span class="material-symbols-outlined">icecream</span>
+                Add a new sweet task! 🍭
+            </button>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-w-[900px]">
+<!-- TO DO COLUMN -->
+<section class="flex flex-col gap-6">
+<div class="bg-secondary-container/40 backdrop-blur-sm p-4 rounded-xl flex items-center justify-between border-b-4 border-secondary-container">
+<div class="flex items-center gap-3">
+<span class="text-2xl">🌸</span>
+<h3 class="font-headline font-black text-on-secondary-container text-lg uppercase tracking-wider">To Do!</h3>
+</div>
+<span class="bg-white/80 w-8 h-8 rounded-full flex items-center justify-center font-bold text-secondary text-sm" id="count-todo">1</span>
+</div>
+<div class="kanban-column flex flex-col gap-6 min-h-[100px]" id="todo-list">
+<article class="kanban-card bg-secondary-container/20 p-6 rounded-xl shadow-xl shadow-secondary-container/10 border-2 border-white relative group cursor-grab active:cursor-grabbing transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-secondary text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-widest inner-pill-glow uppercase">Decor</span>
+<button class="text-zinc-300 hover:text-error-dim transition-colors delete-card"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+<h4 class="font-bold text-lg mb-4 text-on-secondary-container leading-tight focus:outline-none" contenteditable="true">Order pink fairy lights and giant balloons</h4>
+<div class="space-y-2 mb-6">
+<div class="flex items-center gap-2 cursor-pointer group/item" onclick="toggleCheck(this)">
+<div class="w-5 h-5 rounded-full border-2 border-primary-fixed-dim flex items-center justify-center bg-primary">
+<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<span class="text-xs text-secondary-dim font-medium line-through opacity-50">Check Amazon for bulk deals</span>
+</div>
+<div class="flex items-center gap-2 cursor-pointer group/item" onclick="toggleCheck(this)">
+<div class="check-box w-5 h-5 rounded-full border-2 border-secondary flex items-center justify-center"></div>
+<span class="text-xs text-secondary-dim font-medium">Confirm color matching</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="w-7 h-7 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPYn7zjy4_nTAfyAynr06UlpAuNSIoTrL63Tsr-gcKGY1P1eBOW5cLyAyB5e6mdxtgStRwRSO6sacBRF_-rEir0sFw-Psm6FjCfWE3wN1BLbWnB_tMJ21qp8IkbkWu5Uo47DXSGYPvNEG3IDwVYcxQVKQzE1--L6Ih6RQl7r-XHKlukxMCd3LMe6Xek51yNxMLDpr3x0Y7OBRRG0kaH7NyYpnnOAMSGAlM7ov_54iXBgpPI4our1iGDXgRzqW-2ByYRAOImGO9YKA"/>
+</div>
+<div class="flex items-center gap-2 text-zinc-400 text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>2d left</span>
+</div>
+</div>
+</article>
+</div>
+<button class="bg-secondary-container/10 p-6 rounded-xl border-2 border-dashed border-secondary-container/50 flex items-center justify-center group hover:border-secondary hover:bg-secondary-container/20 transition-all" onclick="addNewTask('todo')">
+<div class="flex flex-col items-center gap-2 text-secondary-container group-hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-4xl">add_circle</span>
+<span class="text-xs font-bold uppercase tracking-widest">Add a marshmallow card</span>
+</div>
+</button>
+</section>
+<!-- DOING COLUMN -->
+<section class="flex flex-col gap-6">
+<div class="bg-tertiary-container/40 backdrop-blur-sm p-4 rounded-xl flex items-center justify-between border-b-4 border-tertiary-container">
+<div class="flex items-center gap-3">
+<span class="text-2xl">✨</span>
+<h3 class="font-headline font-black text-on-tertiary-container text-lg uppercase tracking-wider">Doing it!</h3>
+</div>
+<span class="bg-white/80 w-8 h-8 rounded-full flex items-center justify-center font-bold text-tertiary text-sm" id="count-doing">2</span>
+</div>
+<div class="kanban-column flex flex-col gap-6 min-h-[100px]" id="doing-list">
+<article class="kanban-card bg-tertiary-container/30 p-6 rounded-xl shadow-xl shadow-tertiary-container/20 border-2 border-white relative group cursor-grab active:cursor-grabbing transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-tertiary text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-widest inner-pill-glow uppercase">Drinks</span>
+<button class="text-zinc-300 hover:text-error-dim transition-colors delete-card"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+<h4 class="font-bold text-lg mb-4 text-on-tertiary-container leading-tight focus:outline-none" contenteditable="true">Prepare the strawberry lemonade concentrate 🍓</h4>
+<div class="w-full bg-white/50 h-2 rounded-full mb-4">
+<div class="bg-tertiary h-full rounded-full w-2/3 shadow-sm"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="w-7 h-7 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa0hW4bDGYeawWgJEiWfV4O2VDE-SnToEB1NPa533Klwwc9QHbZd7YCDvW4QicoGl_4p8yIazTC42VipWqCLUgydsMrTolZargaABihDBZ215OXi5RGdxp4je5gFv7QArMJP0QTQVN0cuPfjzzsyWO99z7QHRgf3t4sFSTp_Kd4Ms1gV5Zfj1qgQnxtC81ekvMEVcSF2-Ykmk6Gg8nJ7jaAewfHB66QPlyEkdLWhMZdSR2NLJ6j2T-2w89vEfa-aVK5Sy4y-52JYI"/>
+<img class="w-7 h-7 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3ptFOEdqH6xbJgdVUCFmFzDUFEK-xEtJT0wcCnhaIuF0CI1ckMo4rSOhP9nPpFWoFFjoKKTKwXsGYMnVLOGW9K4gYpELCloMqT31-gEH93LsjEEpT3y5BvL6XAVFvOYVfX0wsi0kY_KVhLqIV75SzW_ZaT675FNqkHI1WvBzrLV6w5JXX1jSqYrEdpbDbkojrlIPqPfKGtERCGrRi6wDrX0tBXpaUeZOF8_wUvLGD33a9kYaEcS2kpC5wwTw323VDCkTX8Wb4Tos"/>
+</div>
+<div class="flex items-center gap-2 text-tertiary-dim text-xs font-bold">
+<span class="material-symbols-outlined text-sm">chat_bubble</span>
+<span>5</span>
+</div>
+</div>
+</article>
+<article class="kanban-card bg-white p-6 rounded-xl shadow-xl shadow-pink-100/30 border-2 border-primary-container relative group rotate-1 transition-all candy-glow cursor-grab active:cursor-grabbing">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full text-[10px] font-bold tracking-widest inner-pill-glow uppercase">Food</span>
+<button class="text-zinc-300 hover:text-error-dim transition-colors delete-card"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+<h4 class="font-bold text-lg mb-4 text-primary leading-tight focus:outline-none" contenteditable="true">Design the menu card with cute doodles</h4>
+<div class="space-y-3">
+<div class="flex items-center gap-2 cursor-pointer group/item" onclick="toggleCheck(this)">
+<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<span class="text-xs text-on-surface font-semibold line-through opacity-50">Sketch layout</span>
+</div>
+<div class="flex items-center gap-2 cursor-pointer group/item" onclick="toggleCheck(this)">
+<div class="check-box w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center"></div>
+<span class="text-xs text-on-surface font-semibold">Choose pastel font</span>
+</div>
+</div>
+</article>
+</div>
+<button class="bg-tertiary-container/10 p-6 rounded-xl border-2 border-dashed border-tertiary-container/50 flex items-center justify-center group hover:border-tertiary hover:bg-tertiary-container/20 transition-all" onclick="addNewTask('doing')">
+<div class="flex flex-col items-center gap-2 text-tertiary-container group-hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined text-4xl">add_circle</span>
+<span class="text-xs font-bold uppercase tracking-widest">Add a marshmallow card</span>
+</div>
+</button>
+</section>
+<!-- ALL DONE COLUMN -->
+<section class="flex flex-col gap-6">
+<div class="bg-primary-container/40 backdrop-blur-sm p-4 rounded-xl flex items-center justify-between border-b-4 border-primary-container">
+<div class="flex items-center gap-3">
+<span class="text-2xl">💖</span>
+<h3 class="font-headline font-black text-on-primary-container text-lg uppercase tracking-wider">All Done!</h3>
+</div>
+<span class="bg-white/80 w-8 h-8 rounded-full flex items-center justify-center font-bold text-primary text-sm" id="count-done">2</span>
+</div>
+<div class="kanban-column flex flex-col gap-6 min-h-[100px]" id="done-list">
+<article class="kanban-card bg-white p-6 rounded-xl border-2 border-primary/10 relative group cursor-grab active:cursor-grabbing transition-all">
+<div class="absolute inset-0 bg-primary/5 rounded-xl pointer-events-none"></div>
+<div class="flex justify-between items-start mb-4">
+<span class="bg-zinc-200 text-zinc-500 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">Admin</span>
+<button class="text-zinc-300 hover:text-error-dim transition-colors delete-card"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+<h4 class="font-bold text-lg mb-4 text-zinc-400 leading-tight focus:outline-none" contenteditable="true">Send out Digital Invites 💌</h4>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full border-2 border-zinc-200 overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8O9QwOoLTxRpy1HhopERp_RrA3i22TaJo23RDQ0YD9YiBKFMeRzoh3_Xa2vF28SZJ4jrYo0lbZy1Gv72RsxQj18PT1QO3vGMBFE1x7oSW4ImqTE_t3Cbbc6fIYai0P6s1kNGdRhZw_mFzHn-93k6Mv-q2Ar8CtYk9MQMcoFFFCbdVyGxiw0XHMXQ1q_uj8oVhM7yONpUojIZrfe8QQOVErDV-88zeh0Ht747xLJrDC_33DO2YXqYNSIJmW0ukdvgbz5Xk9mmA2J0"/>
+</div>
+<span class="text-[10px] font-bold text-zinc-400">Completed by Lily</span>
+</div>
+<span class="text-tertiary font-black text-xs">YAY! 🍬</span>
+</div>
+</article>
+<article class="kanban-card bg-white p-6 rounded-xl border-2 border-primary/10 relative group cursor-grab active:cursor-grabbing transition-all">
+<div class="absolute inset-0 bg-primary/5 rounded-xl pointer-events-none"></div>
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-bold text-lg text-zinc-400 leading-tight focus:outline-none flex-1" contenteditable="true">Create the Spotify Summer Vibes Playlist 🎵</h4>
+<button class="text-zinc-300 hover:text-error-dim transition-colors delete-card"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex gap-1">
+<span class="w-4 h-4 rounded-full bg-primary-container/40"></span>
+<span class="w-4 h-4 rounded-full bg-secondary-container/40"></span>
+<span class="w-4 h-4 rounded-full bg-tertiary-container/40"></span>
+</div>
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">music_note</span>
+</div>
+</article>
+</div>
+<button class="bg-primary-container/10 p-6 rounded-xl border-2 border-dashed border-primary-container/50 flex items-center justify-center group hover:border-primary hover:bg-primary-container/20 transition-all" onclick="addNewTask('done')">
+<div class="flex flex-col items-center gap-2 text-primary-container group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-4xl">add_circle</span>
+<span class="text-xs font-bold uppercase tracking-widest">Add a marshmallow card</span>
+</div>
+</button>
+</section>
+</div>
+</main>
+</div>
+<!-- BOTTOM MOBILE NAV -->
+<div class="fixed bottom-0 left-0 w-full p-6 md:hidden z-50">
+<div class="bg-white/90 backdrop-blur-2xl rounded-full px-8 py-4 flex justify-between items-center shadow-2xl border-t-4 border-primary-container">
+<button class="flex flex-col items-center gap-1 text-[#a63b83]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">looks</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined">grade</span>
+</button>
+<div class="relative -top-10">
+<button class="w-16 h-16 bg-gradient-to-br from-primary to-primary-container rounded-full text-white shadow-xl shadow-primary/40 flex items-center justify-center inner-pill-glow scale-110" onclick="addNewTask('todo')">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined">auto_awesome</span>
+</button>
+</div>
+</div>
+<script>
+    // Initialize Drag and Drop
+    document.addEventListener('DOMContentLoaded', () => {
+        const columns = document.querySelectorAll('.kanban-column');
+        columns.forEach(column => {
+            new Sortable(column, {
+                group: 'kanban',
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                dragClass: 'sortable-drag',
+                onEnd: () => {
+                    updateCounts();
+                }
+            });
+        });
+
+        // Event delegation for delete buttons
+        document.body.addEventListener('click', (e) => {
+            if (e.target.closest('.delete-card')) {
+                const card = e.target.closest('.kanban-card');
+                card.classList.add('scale-0', 'opacity-0');
+                setTimeout(() => {
+                    card.remove();
+                    updateCounts();
+                }, 300);
+            }
+        });
+    });
+
+    // Helper: Update column task counts
+    function updateCounts() {
+        document.getElementById('count-todo').textContent = document.getElementById('todo-list').children.length;
+        document.getElementById('count-doing').textContent = document.getElementById('doing-list').children.length;
+        document.getElementById('count-done').textContent = document.getElementById('done-list').children.length;
+    }
+
+    // Function: Add new task
+    function addNewTask(columnId) {
+        const list = document.getElementById(`${columnId}-list`);
+        const theme = columnId === 'todo' ? 'secondary-container/20' : 
+                      columnId === 'doing' ? 'tertiary-container/30' : 'white border-primary/10';
+        const textColor = columnId === 'todo' ? 'on-secondary-container' : 
+                          columnId === 'doing' ? 'on-tertiary-container' : 'zinc-400';
+        
+        const card = document.createElement('article');
+        card.className = `kanban-card bg-${theme} p-6 rounded-xl shadow-xl border-2 border-white relative group cursor-grab active:cursor-grabbing transition-all`;
+        
+        card.innerHTML = `
+            <div class="flex justify-between items-start mb-4">
+                <span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">New</span>
+                <button class="text-zinc-300 hover:text-error-dim transition-colors delete-card"><span class="material-symbols-outlined text-sm">close</span></button>
+            </div>
+            <h4 contenteditable="true" class="font-bold text-lg mb-4 text-${textColor} leading-tight focus:outline-none">New sweet task...</h4>
+            <div class="flex items-center justify-between mt-4">
+                <div class="flex -space-x-2">
+                    <div class="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center text-[10px] text-white font-bold border-2 border-white">ME</div>
+                </div>
+                <div class="flex items-center gap-2 text-zinc-400 text-xs">
+                    <span class="material-symbols-outlined text-sm">schedule</span>
+                    <span>Just now</span>
+                </div>
+            </div>
+        `;
+        
+        list.appendChild(card);
+        card.querySelector('h4').focus();
+        updateCounts();
+    }
+
+    // Function: Toggle checklist items
+    function toggleCheck(element) {
+        const checkbox = element.querySelector('.check-box') || element.querySelector('div:first-child');
+        const text = element.querySelector('span');
+        const isChecked = text.classList.contains('line-through');
+
+        if (isChecked) {
+            text.classList.remove('line-through', 'opacity-50');
+            checkbox.innerHTML = '';
+            checkbox.classList.add('border-2');
+            checkbox.classList.remove('bg-primary');
+        } else {
+            text.classList.add('line-through', 'opacity-50');
+            checkbox.classList.remove('border-2');
+            checkbox.classList.add('bg-primary');
+            checkbox.innerHTML = '<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: \'FILL\' 1;">favorite</span>';
+        }
+    }
+</script>
+</body>
+
+
+
+<!---
+
 <div class="container">
     
     <h2 class="mb-4">Hola {{userName}} — Mis Tableros</h2>
@@ -50,4 +378,4 @@
     {{else}}
         <p class="text-muted">No tienes tableros todavía.</p>
     {{/if}}
-</div>
+</div> --->

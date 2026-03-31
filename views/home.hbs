@@ -1,25 +1,206 @@
-<div class="px-4 py-5 my-5 text-center bg-white shadow-sm rounded">
-    <h1 class="display-4 fw-bold text-primary mb-3">Organiza tu éxito con KanbanPro</h1>
-    <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">La herramienta definitiva para gestionar tus tareas diarias de forma visual, ágil y sin complicaciones. Comienza a construir tu tablero hoy mismo.</p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a href="/dashboard" class="btn btn-primary btn-lg px-4 gap-3">Ir al Tablero</a>
-            <a href="/register" class="btn btn-outline-secondary btn-lg px-4">Crear una cuenta</a>
-        </div>
-    </div>
-    
-    <div class="row mt-5 pt-4 border-top">
-        <div class="col-md-4">
-            <h3 class="h5">🚀 Rápido</h3>
-            <p class="text-muted">Interfaz fluida pensada para la productividad.</p>
-        </div>
-        <div class="col-md-4">
-            <h3 class="h5">🔒 Seguro</h3>
-            <p class="text-muted">Tus datos siempre persistentes y a salvo.</p>
-        </div>
-        <div class="col-md-4">
-            <h3 class="h5">📱 Responsivo</h3>
-            <p class="text-muted">Accede desde cualquier dispositivo con Bootstrap.</p>
-        </div>
-    </div>
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KanbanPro - The Sweetest Way to Manage Your Day</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://kit.fontawesome.com/ba4c285fb0.js" crossorigin="anonymous"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#fefcf4",
+              "on-primary": "#ffffff",
+              "primary": "#a63b83",
+              "primary-fixed-dim": "#ee77c2",
+              "secondary-container": "#dec8ff",
+              "outline-variant": "#bab9b2",
+              "on-tertiary-fixed": "#00454c",
+              "inverse-primary": "#fe84d0",
+              "surface-container-high": "#efeee5",
+              "inverse-surface": "#0e0f0a",
+              "secondary-fixed": "#dec8ff",
+              "tertiary-fixed-dim": "#8fdeeb",
+              "surface-container": "#f5f4eb",
+              "on-secondary-container": "#55348d",
+              "secondary-dim": "#6746a0",
+              "on-tertiary-container": "#005963",
+              "tertiary-container": "#9decf9",
+              "outline": "#81817a",
+              "on-secondary-fixed": "#421e79",
+              "tertiary": "#0c6f7a",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-dim": "#00626c",
+              "primary-dim": "#972e76",
+              "error-container": "#f74b6d",
+              "on-surface": "#383833",
+              "on-primary-container": "#5d0046",
+              "on-surface-variant": "#65655f",
+              "secondary": "#7452ad",
+              "surface-container-low": "#fbf9f1",
+              "error-dim": "#a70138",
+              "inverse-on-surface": "#9e9d96",
+              "surface-container-highest": "#e9e9de",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#5f3e97",
+              "surface-dim": "#e4e3d8",
+              "surface-tint": "#a63b83",
+              "primary-container": "#fe84d0",
+              "error": "#c12048",
+              "tertiary-fixed": "#9decf9",
+              "on-background": "#383833",
+              "surface": "#fefcf4",
+              "on-error-container": "#510017",
+              "secondary-fixed-dim": "#d2b7ff",
+              "on-tertiary-fixed-variant": "#00636e",
+              "background": "#fefcf4",
+              "on-primary-fixed-variant": "#6c0152",
+              "on-primary-fixed": "#2f0022",
+              "on-secondary": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "primary-fixed": "#fe84d0",
+              "surface-variant": "#e9e9de"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .bouncy-hover:active { transform: scale(0.95); }
+      .sugar-glass {
+        background: rgba(254, 132, 208, 0.2);
+        backdrop-filter: blur(12px);
+      }
+      .cloud-shape {
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      }
+      .wave-footer {
+        clip-path: ellipse(100% 100% at 50% 100%);
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface overflow-x-hidden">
+
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 px-6 flex flex-col items-center overflow-hidden">
+<!-- Floating Sparkles -->
+<span class="absolute top-40 left-10 text-primary-container opacity-60 material-symbols-outlined text-4xl" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="absolute top-60 right-20 text-tertiary-container opacity-60 material-symbols-outlined text-5xl" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="absolute bottom-20 left-1/4 text-secondary-container opacity-60 material-symbols-outlined text-3xl" data-icon="grade" style="font-variation-settings: 'FILL' 1;">grade</span>
+<h1 class="font-headline font-extrabold text-5xl md:text-7xl text-center mb-6 leading-tight max-w-4xl">
+            Productividad y <span class="text-primary-fixed-dim italic">dulzura! 🎀</span>
+</h1>
+<p class="text-on-surface-variant text-xl md:text-2xl text-center max-w-2xl mb-12">
+            la manera más adorable de llevar un orden de tus tareas y terminarlas exitosamente!
+        </p>
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+<a href="/login"><button class="bg-gradient-to-br from-primary to-primary-container text-white px-10 py-5 rounded-full font-headline font-bold text-xl shadow-[0_10px_20px_rgba(166,59,131,0.3),inset_0_4px_6px_rgba(255,255,255,0.4)] hover:scale-105 transition-all active:scale-95">
+            Login
+        </button></a>
+       <a href="/register"> <button class="bg-white from-primary to-primary-container text-primary-fixed-dim px-10 py-5 rounded-full font-headline font-bold text-xl shadow-[0_10px_20px_rgba(166,59,131,0.3),inset_0_4px_6px_rgba(255,255,255,0.4)] hover:scale-105 transition-all active:scale-95">
+            Registrate
+        </button></a></div>
+<!-- Giant Fluffy Cloud Mockup -->
+<div class="mt-20 relative w-full max-w-5xl">
+<!-- The Cloud -->
+<div class="absolute inset-0 bg-white/60 blur-3xl rounded-full scale-110"></div>
+<div class="relative bg-white/40 backdrop-blur-md rounded-[4rem] p-8 md:p-12 shadow-2xl border-white/20">
+<div class="flex gap-6 overflow-x-auto pb-6">
+<!-- Kawaii Kanban Column 1 -->
+<div class="min-w-[300px] flex-1 bg-surface-container-low rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline font-bold text-primary">Por Hacer 🌸</h3>
+<span class="bg-primary-container/20 text-primary px-3 py-1 rounded-full text-xs font-bold">2</span>
 </div>
+<div class="space-y-4">
+<div class="bg-white p-4 rounded-lg shadow-sm border-l-8 border-primary-container hover:translate-x-1 transition-transform">
+<p class="font-semibold mb-2">Compras del mes</p>
+<div class="flex gap-2">
+<span class="text-[10px] bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-full">Mensual</span>
+</div>
+</div>
+<div class="bg-white p-4 rounded-lg shadow-sm border-l-8 border-secondary-container hover:translate-x-1 transition-transform">
+<p class="font-semibold mb-2">Actualizar CV</p>
+<div class="flex gap-2 text-xs text-zinc-400 items-center">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+                                    Hoy
+                                </div>
+</div>
+</div>
+</div>
+<!-- Kawaii Kanban Column 2 -->
+<div class="min-w-[300px] flex-1 bg-surface-container-low rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline font-bold text-secondary">En curso 🐰</h3>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold">1</span>
+</div>
+<div class="bg-white p-4 rounded-lg shadow-sm border-l-8 border-tertiary-container ring-4 ring-primary-container/20">
+<p class="font-semibold mb-2">diseñar KanbanPro version Cute</p>
+<img alt="candy workspace" class="w-full h-24 object-cover rounded-md mb-3" data-alt="a flat lay of vibrant assorted gummy candies and colorful marshmallows arranged neatly on a pastel blue surface" src="https://images.unsplash.com/photo-1578739419412-f92d5cb3a61f?q=80&w=943&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-secondary-container"></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-tertiary-container"></div>
+</div>
+</div>
+</div>
+<!-- Kawaii Kanban Column 3 -->
+<div class="min-w-[300px] flex-1 bg-surface-container-low rounded-xl p-6 opacity-60">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline font-bold text-tertiary">Listo ✅</h3>
+<span class="material-symbols-outlined text-tertiary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="bg-white/50 p-4 rounded-lg line-through text-zinc-400">
+                            preparar podcast
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-tertiary-container relative pt-32 pb-12 px-8 overflow-hidden">
+<!-- Mint Wave Shape -->
+<div class="absolute top-0 left-0 w-full h-24 bg-surface wave-footer"></div>
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+<div class="text-center md:text-left">
+<h3 class="font-headline font-black text-3xl text-on-tertiary-container mb-2">KanbanPro</h3>
+<p class="text-on-tertiary-container/80 max-w-xs">Haciendo el mundo más dulce una tarea a la vez.</p>
+</div>
+<div class="flex gap-8">
+<a class=" p-2 bg-white rounded-full flex items-center justify-center text-secondary shadow-sm hover:scale-110 transition-all" href="#">
+<p>Repositorio</p>
+</a>
+<a class="p-2 bg-white rounded-full flex items-center justify-center text-secondary shadow-sm hover:scale-110 transition-all" href="#">
+<p>Portafolio</p>
+</a>
+</div>
+<div class="grid grid-cols-2 gap-x-12 gap-y-2 text-on-tertiary-container font-medium">
+<a class="hover:underline" href="#">Privacy</a>
+<a class="hover:underline" href="#">Terms</a>
+<a class="hover:underline" href="#">Support</a>
+<a class="hover:underline" href="#">Blog</a>
+</div>
+</div>
+<div class="mt-20 pt-8 border-t border-on-tertiary-container/10 text-center text-on-tertiary-container/60 text-sm">
+            © 2024 KanbanPro. Stay sweet! 🎀
+        </div>
+</footer>
+</body></html>

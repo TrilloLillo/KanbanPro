@@ -1,26 +1,94 @@
-<div class="row justify-content-center">
-    <div class="col-md-5">
-        <div class="card shadow border-0">
-            <div class="card-body p-5">
-                <h2 class="text-center mb-4">Crear Cuenta</h2>
-                <form action="/api/auth/register" method="POST">
-                    <div class="mb-3">
-                        <label class="form-label">Nombre Completo</label>
-                        <input type="text" name="name" class="form-control" placeholder="Ej. Juan Pérez" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Correo Electrónico</label>
-                        <input type="email" name="email" class="form-control" placeholder="nombre@ejemplo.com" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Contraseña</label>
-                        <input type="password" name="password" class="form-control" placeholder="Mínimo 8 caracteres" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100 py-2">Registrarse</button>
-                </form>
-                <hr class="my-4">
-                <p class="text-center mb-0">¿Ya tienes cuenta? <a href="/login" class="text-decoration-none">Inicia sesión aquí</a></p>
-            </div>
-        </div>
-    </div>
+<body class="bg-surface font-body text-on-surface m-0 p-0 min-h-screen overflow-x-hidden">
+<!-- Auth Split Screen Layout -->
+<main class="flex min-h-screen w-full flex-col md:flex-row items-center justify-center">
+<!-- Left Side: Visual Welcome -->
+<section class="relative w-full md:w-1/2 min-h-[409px] md:min-h-screen bg-primary-container flex flex-col items-center justify-center overflow-hidden p-8">
+<!-- Decorative Sugar Clouds -->
+<div class="absolute -top-20 -left-20 w-64 h-64 bg-secondary-container rounded-full blur-3xl opacity-60"></div>
+<div class="absolute -bottom-20 -right-20 w-96 h-96 bg-tertiary-container rounded-full blur-3xl opacity-50"></div>
+<div class="relative z-10 text-center flex flex-col items-center">
+<!-- Mascot -->
+<div class="mb-8 floating-anim">
+<div class="w-48 h-48 bg-white rounded-full flex items-center justify-center squishy-shadow relative">
+<span class="material-symbols-outlined text-primary text-[8rem]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<!-- Small orbiting star -->
+<span class="absolute -top-4 -right-4 material-symbols-outlined text-tertiary text-4xl" style="font-variation-settings: 'FILL' 1;">star</span>
 </div>
+</div>
+<h1 class="font-headline font-black text-5xl md:text-7xl text-on-primary-container tracking-tighter mb-4">
+                    Welcome Sweetie!
+                </h1>
+<p class="font-body text-xl text-on-primary-container/80 max-w-md font-medium">
+                    The Candy Castle is waiting for your next big idea. Let's make work delicious!
+                </p>
+<!-- Floating Labels/Pills for visual interest -->
+<div class="mt-12 flex flex-wrap justify-center gap-4">
+<span class="bg-white/40 px-6 py-2 rounded-full font-bold text-on-primary-container backdrop-blur-md">🍭 100% Fun</span>
+<span class="bg-white/40 px-6 py-2 rounded-full font-bold text-on-primary-container backdrop-blur-md">✨ Magical Tasks</span>
+<span class="bg-white/40 px-6 py-2 rounded-full font-bold text-on-primary-container backdrop-blur-md">🍦 Soft Deadlines</span>
+</div>
+</div>
+<!-- Pattern Overlay -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#ffffff 2px, transparent 2px); background-size: 30px 30px;"></div>
+</section>
+<!-- Right Side: Form Card -->
+<section class="w-full md:w-1/2 bg-surface-bright flex items-center justify-center p-6 md:p-12 relative">
+<!-- Sparkle Decorations -->
+<div class="absolute top-20 right-20 text-tertiary opacity-30 select-none">
+<span class="material-symbols-outlined text-6xl">flare</span>
+</div>
+<div class="absolute bottom-20 left-20 text-primary opacity-20 select-none">
+<span class="material-symbols-outlined text-5xl">auto_fix_high</span>
+</div>
+<!-- Login Card -->
+<div class="w-full max-w-md bg-surface-container-lowest rounded-xl p-8 md:p-12 squishy-shadow border-none relative">
+<!-- Brand Anchor -->
+<div class="flex items-center gap-2 mb-10">
+<div class="w-10 h-10 bg-primary flex items-center justify-center rounded-lg inner-glow">
+<span class="material-symbols-outlined text-white text-2xl">looks</span>
+</div>
+<span class="font-headline font-black text-2xl text-primary tracking-tighter">KanbanPro</span>
+</div>
+<div class="mb-10">
+<h2 class="font-headline font-bold text-3xl text-on-surface mb-2">Regístrate</h2>
+<p class="text-on-surface-variant font-medium">Completa todos los campos para poder registrarte</p>
+</div>
+<!-- Form -->
+<form class="space-y-6">
+<div class="space-y-2">
+<label class="font-label font-bold text-sm text-on-surface-variant ml-2" for="email">Sweet Email</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border-none rounded-full px-6 py-4 text-on-surface focus:ring-4 focus:ring-primary-container transition-all placeholder:text-outline-variant font-medium" id="email" placeholder="sugar@cloud.com" type="email"/>
+<span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 text-primary-fixed-dim">mail</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center ml-2">
+<label class="font-label font-bold text-sm text-on-surface-variant" for="password">Secret Recipe</label>
+<a class="text-xs font-bold text-primary hover:underline" href="#">Forgot?</a>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border-none rounded-full px-6 py-4 text-on-surface focus:ring-4 focus:ring-primary-container transition-all placeholder:text-outline-variant font-medium" id="password" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 text-primary-fixed-dim">lock</span>
+</div>
+</div>
+<div class="flex items-center gap-3 ml-2">
+<input class="w-5 h-5 rounded-md border-primary-container text-primary focus:ring-primary-container" id="remember" type="checkbox"/>
+<label class="text-sm font-semibold text-on-surface-variant" for="remember">Stay logged in for a week</label>
+</div>
+<button class="w-full bg-gradient-to-br from-primary to-primary-fixed text-white font-headline font-black text-xl py-5 rounded-full hover:scale-[1.03] transition-transform active:scale-95 inner-glow squishy-shadow" type="submit">
+                        Inicia Sesión! ✨
+                    </button>
+</form>
+<!-- Divider -->
+<!-- Social Logins -->
+<p class="mt-10 text-center font-medium text-on-surface-variant">
+                    No tienes cuenta? <a class="text-primary font-black hover:underline" href="/register">Regístrate</a>
+</p>
+<!-- Background Image Decoration - descriptive alt -->
+<div class="absolute -z-10 -bottom-10 -right-10 w-40 h-40 opacity-20 rotate-12">
+<img class="w-full h-full object-contain" data-alt="vibrant rainbow swirl candy with crystalline sugar coating and soft focus background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9PiclnR5npwN7-JFkfADyAe0w0GCcs2gMT-6--Dz80GCKpiLTugOkhmYPXs1qXVypqkUxjnJTi3qRSynwFumYJrxwsilb-04tsov5JkUpV7euUTeQVt0es2hXJVdvkQByA_RwpvTUAmwCbBqE4X__VKxNa7kMWQMGlxBZKzhufbNhW_BND4E0tXYSBrlVt7ySvORjfeUI1dbCIDgBXLCYDIcpEDzFCSW6nL2kstmYYCgDxwnTAs96RNkMv0Ey32q0z5f3hvHxaDE"/>
+</div>
+</div>
+</main>
+</section></body>
