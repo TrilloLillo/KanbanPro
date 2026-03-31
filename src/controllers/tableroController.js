@@ -1,4 +1,4 @@
-const { Tablero, Lista, Tarjeta } = require('../models');
+const { Tablero, Lista, Card } = require('../models');
 
 // Obtener todos los tableros del usuario autenticado
 exports.obtenerTableros = async (req, res) => {
@@ -89,31 +89,4 @@ exports.eliminarTablero = async (req, res) => {
     }
 };
 
-// Crear un tablero + lista inicial + tarjeta inicial en cadena (útil para un botón rápido)
-exports.crearTableroConListaYTarjeta = async (req, res) => {
-    try {
-        const { tituloTablero, tituloLista, tituloTarjeta, descripcionTarjeta } = req.body;
 
-        const tablero = await Tablero.create({
-            titulo: tituloTablero || 'Tablero Rápido',
-            usuarioId: req.usuarioId,
-        });
-
-        const lista = await Lista.create({
-            titulo: tituloLista || 'Lista Inicial',
-            tableroId: tablero.id,
-        });
-
-        await Tarjeta.create({
-            titulo: tituloTarjeta || 'Tarea Inicial',
-            descripcion: descripcionTarjeta || '',
-            listaId: lista.id,
-        });
-
-        // Redirigir al dashboard (soporte para formularios HTML)
-        return res.redirect('/dashboard');
-    } catch (error) {
-        console.error('Error creando el paquete rápido:', error);
-        return res.status(500).json({ error: 'Error al crear tablero/lista/tarjeta' });
-    }
-};

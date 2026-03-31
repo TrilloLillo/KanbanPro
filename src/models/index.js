@@ -3,21 +3,21 @@ const { sequelize } = require("../config/database");
 const Usuario = require("./Usuarios");
 const Tablero = require("./Tableros");
 const Lista = require("./Listas");
-const Tarjeta = require("./Tarjetas");
+const Card = require("./Cards");
 
 //relaciones entre modelos
 Usuario.hasMany(Tablero, { foreignKey: "usuarioId", onDelete: "CASCADE" });
 Tablero.belongsTo(Usuario, { foreignKey: "usuarioId" });
 Tablero.hasMany(Lista, { foreignKey: "tableroId", onDelete: "CASCADE" });
 Lista.belongsTo(Tablero, { foreignKey: "tableroId" });
-Lista.hasMany(Tarjeta, { foreignKey: "listaId", onDelete: "CASCADE" });
-Tarjeta.belongsTo(Lista, { foreignKey: "listaId" });
+Lista.hasMany(Card, { foreignKey: "listaId", onDelete: "CASCADE" });
+Card.belongsTo(Lista, { foreignKey: "listaId" });
 
 //exportamos los modelos para usarlos en otras partes de la aplicación
 module.exports = {
   Usuario,
   Tablero,
   Lista,
-  Tarjeta,
+  Card,
   sequelize,
 };

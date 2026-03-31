@@ -54,36 +54,40 @@
 <p class="text-on-surface-variant font-medium">Completa todos los campos para poder registrarte</p>
 </div>
 <!-- Form -->
-<form class="space-y-6">
-<div class="space-y-2">
-<label class="font-label font-bold text-sm text-on-surface-variant ml-2" for="email">Sweet Email</label>
+<form action="/api/auth/register" method="POST" class="space-y-6">
+    <div class="space-y-2">
+<div class="flex justify-between items-center ml-2">
+<label class="font-label font-bold text-sm text-on-surface-variant" for="name">Nombre</label>
+</div>
 <div class="relative">
-<input class="w-full bg-surface-container-highest border-none rounded-full px-6 py-4 text-on-surface focus:ring-4 focus:ring-primary-container transition-all placeholder:text-outline-variant font-medium" id="email" placeholder="sugar@cloud.com" type="email"/>
+<input class="w-full bg-surface-container-highest border-none rounded-full px-6 py-4 text-on-surface focus:ring-4 focus:ring-primary-container transition-all placeholder:text-outline-variant font-medium" name="name" placeholder="tu nombre" type="text"/>
+<span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 text-primary-fixed-dim">person</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label font-bold text-sm text-on-surface-variant ml-2" for="email">Email</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border-none rounded-full px-6 py-4 text-on-surface focus:ring-4 focus:ring-primary-container transition-all placeholder:text-outline-variant font-medium" name="email" placeholder="tumail@mail.com" type="email"/>
 <span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 text-primary-fixed-dim">mail</span>
 </div>
 </div>
 <div class="space-y-2">
 <div class="flex justify-between items-center ml-2">
-<label class="font-label font-bold text-sm text-on-surface-variant" for="password">Secret Recipe</label>
-<a class="text-xs font-bold text-primary hover:underline" href="#">Forgot?</a>
+<label class="font-label font-bold text-sm text-on-surface-variant" for="password">Contraseña</label>
 </div>
 <div class="relative">
-<input class="w-full bg-surface-container-highest border-none rounded-full px-6 py-4 text-on-surface focus:ring-4 focus:ring-primary-container transition-all placeholder:text-outline-variant font-medium" id="password" placeholder="••••••••" type="password"/>
+<input class="w-full bg-surface-container-highest border-none rounded-full px-6 py-4 text-on-surface focus:ring-4 focus:ring-primary-container transition-all placeholder:text-outline-variant font-medium" name="password" placeholder="••••••••" type="password"/>
 <span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 text-primary-fixed-dim">lock</span>
 </div>
 </div>
-<div class="flex items-center gap-3 ml-2">
-<input class="w-5 h-5 rounded-md border-primary-container text-primary focus:ring-primary-container" id="remember" type="checkbox"/>
-<label class="text-sm font-semibold text-on-surface-variant" for="remember">Stay logged in for a week</label>
-</div>
 <button class="w-full bg-gradient-to-br from-primary to-primary-fixed text-white font-headline font-black text-xl py-5 rounded-full hover:scale-[1.03] transition-transform active:scale-95 inner-glow squishy-shadow" type="submit">
-                        Inicia Sesión! ✨
+                        Registrarse! ✨
                     </button>
 </form>
 <!-- Divider -->
 <!-- Social Logins -->
 <p class="mt-10 text-center font-medium text-on-surface-variant">
-                    No tienes cuenta? <a class="text-primary font-black hover:underline" href="/register">Regístrate</a>
+                    Ya tienes cuenta? <a class="text-primary font-black hover:underline" href="/login">Inicia Sesion!</a>
 </p>
 <!-- Background Image Decoration - descriptive alt -->
 <div class="absolute -z-10 -bottom-10 -right-10 w-40 h-40 opacity-20 rotate-12">

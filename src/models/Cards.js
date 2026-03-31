@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/database");
 
 
-const Tarjeta = sequelize.define("Tarjeta", {
+const Card = sequelize.define("Card", {
   titulo: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -14,4 +14,4 @@ const Tarjeta = sequelize.define("Tarjeta", {
 
 
 
-module.exports = Tarjeta;
+module.exports = Card;

@@ -4,7 +4,7 @@ const { engine } = require("express-handlebars");
 const fs = require("fs");
 const path = require("path");
 const tableroRoutes = require('./src/routes/tableroRoutes');
-const tarjetaRoutes = require('./src/routes/tarjetaRoutes');
+const tarjetaRoutes = require('./src/routes/cardRoutes');
 const listaRoutes = require('./src/routes/listaRoutes');
 const authenticateToken = require("./src/middlewares/auth");
 const authRoutes = require('./src/routes/authRoutes');
@@ -99,9 +99,14 @@ app.get("/dashboard", authenticateToken, async (req, res) => {
     const usuario = await Usuario.findByPk(req.usuarioId);
     const userName = usuario ? usuario.name : '';
 
+    // Elegir tablero actual (por ahora el primero) y marcar tableros activos
+    const tableroActual = plainTableros.length ? plainTableros[0] : { id: null, titulo: '', Listas: [] };
+    plainTableros = plainTableros.map(tb => ({ ...tb, active: tb.id === tableroActual.id }));
+
     res.render("dashboard", {
       title: "Mi Tablero",
       tableros: plainTableros,
+      tableroActual,
       userName,
     });
   } catch (error) {
