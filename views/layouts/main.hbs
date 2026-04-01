@@ -1,37 +1,148 @@
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Perfil de {{title}}</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-  </head>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KanbanPro - The Sweetest Way to Manage Your Day</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://kit.fontawesome.com/ba4c285fb0.js" crossorigin="anonymous"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#fefcf4",
+              "on-primary": "#ffffff",
+              "primary": "#a63b83",
+              "primary-fixed-dim": "#ee77c2",
+              "secondary-container": "#dec8ff",
+              "outline-variant": "#bab9b2",
+              "on-tertiary-fixed": "#00454c",
+              "inverse-primary": "#fe84d0",
+              "surface-container-high": "#efeee5",
+              "inverse-surface": "#0e0f0a",
+              "secondary-fixed": "#dec8ff",
+              "tertiary-fixed-dim": "#8fdeeb",
+              "surface-container": "#f5f4eb",
+              "on-secondary-container": "#55348d",
+              "secondary-dim": "#6746a0",
+              "on-tertiary-container": "#005963",
+              "tertiary-container": "#9decf9",
+              "outline": "#81817a",
+              "on-secondary-fixed": "#421e79",
+              "tertiary": "#0c6f7a",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-dim": "#00626c",
+              "primary-dim": "#972e76",
+              "error-container": "#f74b6d",
+              "on-surface": "#383833",
+              "on-primary-container": "#5d0046",
+              "on-surface-variant": "#65655f",
+              "secondary": "#7452ad",
+              "surface-container-low": "#fbf9f1",
+              "error-dim": "#a70138",
+              "inverse-on-surface": "#9e9d96",
+              "surface-container-highest": "#e9e9de",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#5f3e97",
+              "surface-dim": "#e4e3d8",
+              "surface-tint": "#a63b83",
+              "primary-container": "#fe84d0",
+              "error": "#c12048",
+              "tertiary-fixed": "#9decf9",
+              "on-background": "#383833",
+              "surface": "#fefcf4",
+              "on-error-container": "#510017",
+              "secondary-fixed-dim": "#d2b7ff",
+              "on-tertiary-fixed-variant": "#00636e",
+              "background": "#fefcf4",
+              "on-primary-fixed-variant": "#6c0152",
+              "on-primary-fixed": "#2f0022",
+              "on-secondary": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "primary-fixed": "#fe84d0",
+              "surface-variant": "#e9e9de"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .bouncy-hover:active { transform: scale(0.95); }
+      .sugar-glass {
+        background: rgba(254, 132, 208, 0.2);
+        backdrop-filter: blur(12px);
+      }
+      .cloud-shape {
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      }
+      .wave-footer {
+        clip-path: ellipse(100% 100% at 50% 100%);
+      }
+    </style>
+</head>
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="/">📋 KanbanPro</a>
-        <div class="navbar-nav">
-          <a class="nav-link" href="/">Inicio</a>
-          <a class="nav-link" href="/dashboard">Tablero</a>
-          <a class="nav-link" href="/login">Login</a>
-          <a class="nav-link" href="/register">Registro</a>
+    <!-- Top Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 py-4 bg-white/70 backdrop-blur-xl shadow-xl shadow-pink-100/20">
+<div class="text-2xl font-black text-[#a63b83] tracking-tighter hover:scale-105 transition-transform font-headline">
+            KanbanPro
         </div>
-      </div>
-    </nav>
+<div class="hidden md:flex items-center gap-8 font-headline font-bold text-lg tracking-tight">
+<a class="text-zinc-400 hover:bg-[#fe84d0]/10 px-4 py-1 rounded-full transition-all duration-300" href="/">Inicio</a>
+<a class="text-zinc-400 hover:bg-[#fe84d0]/10 px-4 py-1 rounded-full transition-all duration-300" href="/dashboard">Mi tablero</a>
+<a class="text-zinc-400 hover:bg-[#fe84d0]/10 px-4 py-1 rounded-full transition-all duration-300" href="/login">Login</a>
+<a class="text-zinc-400 hover:bg-[#fe84d0]/10 px-4 py-1 rounded-full transition-all duration-300" href="/register">Registrate</a>
+</div>
+</nav>
 
-    <main class="container">
+    <!-- Use full width layout and add top padding to avoid fixed nav overlap -->
+    <main class="w-full px-8 pt-20">
       {{{body}}}
     </main>
-
+<!-- Footer -->
+<footer class="bg-tertiary-container relative pt-32 pb-12 px-8 overflow-hidden">
+<!-- Mint Wave Shape -->
+<div class="absolute top-0 left-0 w-full h-24 bg-surface wave-footer"></div>
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+<div class="text-center md:text-left">
+<h3 class="font-headline font-black text-3xl text-on-tertiary-container mb-2">KanbanPro</h3>
+<p class="text-on-tertiary-container/80 max-w-xs">Haciendo el mundo más dulce una tarea a la vez.</p>
+</div>
+<div class="flex gap-8">
+<a class=" p-2 bg-white rounded-full flex items-center justify-center text-secondary shadow-sm hover:scale-110 transition-all" href="#">
+<p>Repositorio</p>
+</a>
+<a class="p-2 bg-white rounded-full flex items-center justify-center text-secondary shadow-sm hover:scale-110 transition-all" href="#">
+<p>Portafolio</p>
+</a>
+</div>
+</div>
+<div class="mt-20 pt-8 border-t border-on-tertiary-container/10 text-center text-on-tertiary-container/60 text-sm">
+            © 2026 KanbanPro. Siempre Dulce! 🎀
+        </div>
+</footer>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
+    <script src="/javascript/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
   </body>
 </html>

@@ -1,0 +1,43 @@
+/* Estilo para el contenedor de tableros (Scroll Horizontal) */
+.kanban-container {
+    display: flex;
+    overflow-x: auto;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 20px;
+    height: calc(100vh - 100px); /* Ajusta según tu navbar */
+}
+
+/* Estilo de las Listas (Columnas) */
+.kanban-list {
+    width: 300px;
+    min-width: 300px;
+    background-color: #ebedf0;
+    border-radius: 8px;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedor de Cards (Scroll Vertical) */
+.kanban-cards-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 8px;
+    min-height: 50px; /* Importante para soltar en listas vacías */
+}
+
+/* Estilo de la Tarjeta */
+.kanban-card {
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    margin-bottom: 8px;
+    padding: 10px;
+    cursor: grab;
+    transition: background-color 0.2s;
+}
+
+.kanban-card:hover {
+    background-color: #f4f5f7;
+}

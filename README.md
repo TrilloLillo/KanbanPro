@@ -1,98 +1,89 @@
-# 💼 EF- M6 Proyecto integrador Sprint 1
-## Proyecto: "KanbanPro" - Kick-off del Sprint 1
 
-### Asunto: 📧 ¡Luz verde para el prototipo funcional de KanbanPro!
+# 💼 EF-M8 Proyecto integrador Sprint 3
+## Proyecto: "KanbanPro" - Kick-off del Sprint 3 (Fase Final)
 
-#### De: David, Product Manager de KanbanPro Para: El Equipo de Desarrollo (Tú)
+### Resumen del Sprint 3: API RESTful, Seguridad y Funcionalidad Completa
 
-¡Hola equipo!
+Objetivo del Sprint: Desarrollar la API RESTful completa para gestionar todos los recursos de la aplicación, implementar un sistema de autenticación seguro con JWT y, finalmente, conectar las vistas de Handlebars a la base de datos a través de esta nueva capa de API para lograr una aplicación totalmente funcional.
 
-Estoy muy emocionado de dar inicio al desarrollo de KanbanPro. Para arrancar con fuerza, necesitamos construir un prototipo funcional que nos permita validar tanto el diseño visual como la experiencia de usuario principal.
+Historias de Usuario y Técnicas a Implementar
 
-El objetivo de este primer sprint es crear una aplicación navegable que no solo luzca como el producto final, sino que también demuestre la funcionalidad clave: la capacidad de añadir una tarea y que esta persista. Para esta fase inicial, utilizaremos un archivo JSON local en el servidor como nuestra "base de datos". Esto nos dará una prueba de concepto sólida sobre la cual construir.
+### HU-04: Gestión de Cuentas de Usuario
 
-¡Vamos a crear la primera versión funcional de KanbanPro!
+    Como un nuevo usuario,
 
-Saludos, David
+    Quiero poder registrarme en la aplicación con un email y contraseña,
 
-### Resumen del Sprint 1: Prototipo Funcional con Persistencia en Archivos
+    Para crear una cuenta personal y segura.
 
-#### Objetivo del Sprint: Construir la aplicación web inicial renderizada desde el servidor, incluyendo la interfaz de usuario, la navegación y un mecanismo de persistencia de datos local utilizando el sistema de archivos de Node.js y un archivo JSON.
+    Como un usuario ya registrado,
 
-#### Historias de Usuario a Implementar
+    Quiero poder iniciar sesión con mis credenciales,
 
-##### HU-01: Navegación y Estructura Visual
-
-    Como un visitante,
-
-    Quiero poder navegar a las páginas de Inicio, Registro e Inicio de Sesión,
-
-    Para entender la estructura del sitio y cómo acceder a la aplicación.
+    Para acceder a mis tableros de proyectos.
 
 Criterios de Aceptación:
 
-    ✅ Debe existir una ruta GET / que renderice una vista home.hbs.
+    ✅ Se deben instalar las dependencias jsonwebtoken y bcryptjs.
 
-    ✅ Deben existir las rutas GET /register y GET /login que rendericen sus vistas correspondientes.
+    ✅ Debe existir un endpoint POST /api/auth/register que cree un nuevo usuario y guarde su contraseña de forma segura (hasheada con bcryptjs).
 
-    ✅ Todas las vistas deben heredar de un layout.hbs principal para mantener un diseño consistente.
+    ✅ Debe existir un endpoint POST /api/auth/login que verifique las credenciales del usuario y, si son correctas, genere y devuelva un JSON Web Token (JWT).
 
-##### HU-02: Visualización de Datos Persistentes en el Dashboard
+### HT-05: Seguridad de la API
 
-    Como un usuario (simulado),
+    Como desarrollador,
 
-    Quiero que el dashboard cargue y muestre los datos del proyecto desde una fuente de datos permanente,
+    Necesito proteger los endpoints de la aplicación,
 
-    Para que la información sea consistente cada vez que visito la página.
-
-Criterios de Aceptación:
-
-    ✅ Debe existir un archivo data.json en el proyecto que contenga la estructura inicial de los tableros, listas y tarjetas.
-
-    ✅ La ruta GET /dashboard debe leer el archivo data.json utilizando el módulo fs de Node.js (fs.readFileSync).
-
-    ✅ El contenido leído (string) debe ser parseado (JSON.parse) a un objeto de JavaScript.
-
-    ✅ Este objeto debe pasarse a la vista dashboard.hbs, la cual usará {{#each}} para renderizar dinámicamente el contenido.
-
-##### HU-03: Creación y Persistencia de Nuevas Tareas
-
-    Como un usuario (simulado),
-
-    Quiero poder añadir una nueva tarjeta a una lista a través de un formulario,
-
-    Para que mi nueva tarea quede guardada y sea visible si recargo la página.
+    Para asegurar que solo los usuarios autenticados puedan acceder y modificar sus propios datos.
 
 Criterios de Aceptación:
 
-    ✅ La vista dashboard.hbs debe incluir un formulario HTML (<form method="POST">) para añadir una nueva tarjeta.
+    ✅ Se debe crear un middleware de autenticación que intercepte las peticiones.
 
-    ✅ El formulario debe enviar los datos a una ruta POST (ej: /nueva-tarjeta).
+    ✅ El middleware debe verificar la existencia y validez de un JWT en el header Authorization: Bearer [token].
 
-    ✅ La lógica de esta ruta POST debe seguir el ciclo "Leer-Modificar-Escribir":
+    ✅ Si el token es inválido o no existe, la API debe devolver un error 401 o 403.
 
-        Leer y parsear el contenido actual de data.json.
+    ✅ Todas las rutas de gestión de datos (tableros, listas, tarjetas) deben estar protegidas por este middleware.
 
-        Modificar el objeto de datos, añadiendo la nueva tarjeta.
+### HT-06: API RESTful para la Gestión de Proyectos
 
-        Convertir el objeto modificado de vuelta a un string JSON (JSON.stringify).
+    Como desarrollador de frontend (simulado),
 
-        Escribir el nuevo string sobreescribiendo el archivo data.json (fs.writeFileSync).
+    Necesito un conjunto de endpoints RESTful para gestionar los recursos de la aplicación,
 
-    ✅ Tras guardar, la ruta debe redirigir (res.redirect) al usuario de vuelta al /dashboard.
+    Para poder construir una interfaz de usuario interactiva y desacoplada.
 
-### Requisitos Técnicos y Estructura
+Criterios de Aceptación:
 
-    Entorno: Inicializa un proyecto de Node.js e instala express y hbs.
+    ✅ Se debe crear un router de Express para agrupar todas las rutas de la API (ej: /api).
 
-    Estructura de Carpetas: El proyecto debe tener una estructura organizada (views/, public/, app.js, data.json).
+    ✅ Se deben implementar todos los endpoints CRUD para los recursos principales:
 
-    Conceptos a Aplicar:
+        Tableros: GET, POST, PUT, DELETE en /api/tableros.
 
-        Node.js y Express: Servidor, ruteo (GET, POST), middleware (express.urlencoded).
+        Listas: POST, PUT, DELETE en /api/tableros/:tableroId/listas.
 
-        Handlebars (hbs): Motor de vistas, layouts y helpers ({{#each}}).
+        Tarjetas: POST, PUT, DELETE en /api/listas/:listaId/tarjetas.
 
-        Módulo fs (File System): fs.readFileSync y fs.writeFileSync.
+    ✅ Todos estos endpoints deben usar los métodos de Sequelize para interactuar con la base de datos.
 
-        JSON: JSON.parse y JSON.stringify.
+    ✅ La API debe ser probada exhaustivamente con un cliente como Postman o Insomnia.
+
+### HU-07: Conexión de la Interfaz con Datos Reales
+
+    Como usuario con sesión iniciada,
+
+    Quiero que el dashboard me muestre mis tableros, listas y tarjetas reales guardados en la base de datos,
+
+    Para poder gestionar mi trabajo de forma efectiva.
+
+Criterios de Aceptación:
+
+    ✅ Las rutas de las vistas (ej: GET /dashboard) deben ser modificadas.
+
+    ✅ Dentro de estas rutas, se debe llamar a la nueva lógica de los controladores de la API para obtener los datos desde la base de datos usando Sequelize.
+
+    ✅ Los datos reales (ya no los simulados) deben ser pasados a las plantillas de Handlebars para su renderizado.
