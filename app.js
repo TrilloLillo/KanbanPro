@@ -32,6 +32,30 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+const jwt = require('jsonwebtoken');
+
+// Middleware global: si existe JWT en cookies, decodificar y exponer usuario a las vistas
+app.use(async (req, res, next) => {
+  try {
+    const token = req.cookies && req.cookies.jwt;
+    if (!token) return next();
+
+    const decoded = jwt.verify(token, 'TU_CLAVE_SECRETA_SUPER_SEGURA');
+    if (!decoded || !decoded.id) return next();
+
+    // Buscar usuario y exponer datos mínimos a las vistas
+    const usuario = await Usuario.findByPk(decoded.id);
+    if (usuario) {
+      res.locals.user = { id: usuario.id, name: usuario.name, email: usuario.email };
+      // También dejamos userName por compatibilidad con dashboard.hbs
+      res.locals.userName = usuario.name;
+    }
+  } catch (err) {
+    // Si hay token inválido/expirado, no hacemos nada; simplemente no exponemos user
+    // console.warn('JWT inválido o error al decodificar:', err.message);
+  }
+  next();
+});
 app.use('/api/tableros', tableroRoutes);
 app.use('/api/tarjetas', tarjetaRoutes);
 app.use('/api/listas', listaRoutes);
