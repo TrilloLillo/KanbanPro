@@ -9,7 +9,7 @@ const listaRoutes = require('./src/routes/listaRoutes');
 const authenticateToken = require("./src/middlewares/auth");
 const authRoutes = require('./src/routes/authRoutes');
 const cookieParser = require("cookie-parser");
-const { Tablero, Lista, Tarjeta, Usuario } = require('./src/models');
+const { Tablero, Lista, Card, Usuario } = require('./src/models');
 
 
 
@@ -18,12 +18,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // --- CONFIGURACIÓN DE MOTOR DE VISTAS (HBS) ---
-app.engine("hbs", engine({ extname: ".hbs" }));
+app.engine("hbs", engine({
+  extname: ".hbs",
+  helpers: {
+    eq: (a, b) => a === b,
+  },
+}));
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
 // --- MIDDLEWARES ---
 app.use(express.static(path.join(__dirname, "public"))); 
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api/tableros', tableroRoutes);
@@ -50,7 +56,7 @@ app.get('/debug/my-data', authenticateToken, async (req, res) => {
   try {
     const tableros = await Tablero.findAll({
       where: { usuarioId: req.usuarioId },
-      include: [{ model: Lista, include: [Tarjeta] }],
+      include: [{ model: Lista, include: [Card] }],
     });
     const plain = tableros.map(t => t.get({ plain: true }));
     return res.json({ ok: true, tableros: plain });
@@ -65,29 +71,54 @@ app.get('/debug/my-data', authenticateToken, async (req, res) => {
 app.get("/dashboard", authenticateToken, async (req, res) => {
   try {
     // Obtener los tableros del usuario logueado junto a sus listas y tarjetas
+    const ORDEN_LISTAS = ['Por hacer', 'Haciendo', 'Hecho'];
     const tableros = await Tablero.findAll({
       where: { usuarioId: req.usuarioId },
       include: [
-        { model: Lista, include: [Tarjeta] },
+        { model: Lista, include: [Card] },
       ],
+      order: [['createdAt', 'DESC']],
     });
+
+    // Función para ordenar listas según el orden deseado
+    function ordenarListas(listas) {
+      return (listas || []).sort((a, b) => {
+        const iA = ORDEN_LISTAS.indexOf(a.titulo);
+        const iB = ORDEN_LISTAS.indexOf(b.titulo);
+        return (iA === -1 ? 99 : iA) - (iB === -1 ? 99 : iB);
+      });
+    }
+
+    // Auto-crear listas por defecto para tableros que no tengan ninguna
+    for (const tablero of tableros) {
+      const listas = await Lista.findAll({ where: { tableroId: tablero.id } });
+      if (listas.length === 0) {
+        console.log(`>>> Tablero "${tablero.titulo}" (id=${tablero.id}) sin listas, creando las 3 por defecto...`);
+        await Lista.bulkCreate([
+          { titulo: 'Por hacer', tableroId: tablero.id },
+          { titulo: 'Haciendo',  tableroId: tablero.id },
+          { titulo: 'Hecho',     tableroId: tablero.id },
+        ]);
+        // Recargar el tablero con sus nuevas listas
+        await tablero.reload({ include: [{ model: Lista, include: [Card] }] });
+      }
+    }
 
     // Pasar objetos planos a la vista para Handlebars
     let plainTableros = tableros.map((t) => t.get({ plain: true }));
 
-    // Normalizar claves: asegurarnos de que siempre existan 'Listas' y 'Tarjetas'
+    // Normalizar claves: asegurarnos de que siempre existan 'Listas' y 'Cards'
     plainTableros = plainTableros.map((tb) => {
-      // some versions or configs may lowercase association keys
-      if (!tb.Listas && tb.listas) tb.Listas = tb.listas;
+      // Sequelize puede devolver la clave como Lista, Listas, lista o listas
+      if (!tb.Listas) tb.Listas = tb.Lista || tb.listas || tb.lista || [];
       if (tb.Listas && Array.isArray(tb.Listas)) {
-        tb.Listas = tb.Listas.map((l) => {
-          if (!l.Tarjetas && l.tarjetas) l.Tarjetas = l.tarjetas;
-          // ensure arrays exist
-          l.Tarjetas = l.Tarjetas || [];
+        tb.Listas = ordenarListas(tb.Listas).map((l) => {
+          if (!l.Cards) l.Cards = l.Card || l.cards || l.card || [];
+          l.Cards = l.Cards || [];
           return l;
         });
       } else {
-        tb.Listas = tb.Listas || [];
+        tb.Listas = [];
       }
       return tb;
     });
@@ -147,6 +178,13 @@ app.post("/nueva-tarjeta", (req, res) => {
 });
 
 // --- INICIO DEL SERVIDOR ---
-app.listen(PORT, () => {
-  console.log(`🚀 KanbanPro corriendo en http://localhost:${PORT}`);
+const { sequelize } = require('./src/models');
+
+sequelize.sync().then(() => {
+  console.log('Base de datos sincronizada (tablas creadas)');
+  app.listen(PORT, () => {
+    console.log(`KanbanPro corriendo en http://localhost:${PORT}`);
+  });
+}).catch((err) => {
+  console.error('Error al sincronizar la base de datos:', err);
 });

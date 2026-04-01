@@ -1,5 +1,6 @@
 <body class="bg-surface font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container">
   <div class="flex pt-24 min-h-screen">
+    <!-- SIDEBAR -->
     <aside class="hidden lg:flex flex-col gap-4 p-6 h-[calc(100vh-6rem)] w-72 m-4 rounded-[3rem] sticky top-24 left-0 bg-[#fefcf4] dark:bg-zinc-900 shadow-[0_20px_40px_rgba(166,59,131,0.08)]">
       <div class="flex items-center gap-3 px-4 py-2">
         <div class="w-10 h-10 bg-primary-container rounded-2xl flex items-center justify-center text-white inner-pill-glow">
@@ -15,17 +16,20 @@
         <p class="px-6 text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2">Mis Tableros</p>
         {{#if tableros.length}}
           {{#each tableros}}
-          <div 
-            onclick="cargarTablero('{{this.id}}')"
-            class="tablero-selector text-zinc-500 px-6 py-3 hover:bg-[#dec8ff] hover:scale-105 transition-all duration-300 rounded-full cursor-pointer flex items-center gap-4 {{#if this.active}}bg-[#dec8ff] text-primary shadow-sm{{/if}}"
+          <div
+            class="tablero-selector group text-zinc-500 px-6 py-3 hover:bg-[#dec8ff] hover:scale-105 transition-all duration-300 rounded-full cursor-pointer flex items-center gap-4 {{#if this.active}}bg-[#dec8ff] text-primary shadow-sm{{/if}}"
             data-id="{{this.id}}"
           >
-            <span class="material-symbols-outlined">dashboard</span>
-            <span class="font-semibold text-sm">{{this.titulo}}</span>
+            <span class="material-symbols-outlined" onclick="cargarTablero('{{this.id}}')">dashboard</span>
+            <span class="font-semibold text-sm flex-1" onclick="cargarTablero('{{this.id}}')">{{this.titulo}}</span>
+            <button onclick="event.stopPropagation(); eliminarTablero('{{this.id}}', '{{this.titulo}}')"
+              class="opacity-0 group-hover:opacity-100 text-zinc-400 hover:text-red-500 transition-all" title="Eliminar tablero">
+              <span class="material-symbols-outlined text-sm">close</span>
+            </button>
           </div>
           {{/each}}
         {{else}}
-          <p class="px-6 text-sm text-zinc-400 italic">No hay tableros para mostrar, crea uno</p>
+          <p class="px-6 text-sm text-zinc-400 italic">No hay tableros, crea uno</p>
         {{/if}}
       </div>
 
@@ -39,6 +43,7 @@
       </div>
     </aside>
 
+    <!-- MAIN -->
     <main class="flex-1 p-8 pt-4 overflow-x-auto custom-scrollbar">
       {{#if tableros.length}}
       <header class="mb-10">
@@ -47,35 +52,59 @@
         </h1>
       </header>
 
-      <div id="contenedor-columnas" class="flex gap-8 min-w-max pb-8">
+      <div id="contenedor-columnas" class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8">
         {{#each tableroActual.Listas}}
-        <section class="flex flex-col gap-6 w-80 column-container">
+        <section class="flex flex-col gap-5 column-container">
+          <!-- Column header -->
           <div class="bg-secondary-container/40 backdrop-blur-sm p-4 rounded-xl flex items-center justify-between border-b-4 border-secondary-container">
-            <h3 class="font-headline font-black text-on-secondary-container text-lg uppercase tracking-wider">{{this.titulo}}</h3>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">
+                {{#if (eq this.titulo "Por hacer")}}🌸{{else}}{{#if (eq this.titulo "Haciendo")}}✨{{else}}💖{{/if}}{{/if}}
+              </span>
+              <h3 class="font-headline font-black text-on-secondary-container text-lg uppercase tracking-wider">{{this.titulo}}</h3>
+            </div>
             <span class="bg-white/80 w-8 h-8 rounded-full flex items-center justify-center font-bold text-secondary text-sm count-badge">
               {{this.Cards.length}}
             </span>
           </div>
 
-          <div class="kanban-column flex flex-col gap-6 min-h-[150px]" data-list-id="{{this.id}}">
-            {{#each this.Card}}
-            <article class="kanban-card bg-white p-6 rounded-xl shadow-md border-2 border-transparent hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing" data-card-id="{{this.id}}">
-              <div class="flex justify-between items-start mb-4">
+          <!-- Cards -->
+          <div class="kanban-column flex flex-col gap-5 min-h-[150px]" data-list-id="{{this.id}}">
+            {{#each this.Cards}}
+            <article class="kanban-card bg-white p-5 rounded-xl shadow-md border-2 border-transparent hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing" data-card-id="{{this.id}}">
+              <div class="flex justify-between items-start mb-3">
                 <span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-[10px] font-bold uppercase">Tarea</span>
                 <button class="text-zinc-300 hover:text-error transition-colors delete-card">
                   <span class="material-symbols-outlined text-sm">close</span>
                 </button>
               </div>
-              <h4 class="font-bold text-lg text-on-surface leading-tight">{{this.titulo}}</h4>
+              <h4 class="font-bold text-on-surface leading-tight">{{this.titulo}}</h4>
+              {{#if this.descripcion}}
               <p class="text-xs text-zinc-500 mt-2">{{this.descripcion}}</p>
+              {{/if}}
             </article>
             {{/each}}
           </div>
+
+          <!-- Add card form -->
+          <form action="/api/tarjetas/lista/{{this.id}}" method="POST" class="flex flex-col gap-2 p-4 bg-white/50 rounded-xl border-2 border-dashed border-secondary-container/40 hover:border-secondary/40 transition-colors">
+            <input name="titulo" type="text" placeholder="Nueva tarea..." required
+              class="px-4 py-2.5 rounded-lg border border-zinc-200 text-sm focus:outline-none focus:border-primary bg-white placeholder:text-zinc-400" />
+            <button type="submit"
+              class="bg-secondary/10 text-secondary font-bold py-2.5 rounded-lg text-xs hover:bg-secondary/20 transition-colors flex items-center justify-center gap-1">
+              <span class="material-symbols-outlined text-sm">add_circle</span>
+              Agregar tarea
+            </button>
+          </form>
         </section>
         {{/each}}
       </div>
+
       {{else}}
       <div class="p-16 text-center text-zinc-400">
+        <div class="inline-flex items-center justify-center w-24 h-24 bg-primary-container/20 rounded-full mb-6">
+          <span class="material-symbols-outlined text-5xl text-primary-container">dashboard_customize</span>
+        </div>
         <p class="text-lg font-semibold">No hay tableros para mostrar, crea uno</p>
         <p class="text-sm mt-2">Usa el formulario en la barra lateral para crear tu primer tablero.</p>
       </div>
@@ -83,79 +112,126 @@
     </main>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<script>
-  // 1. FUNCIÓN PARA CAMBIAR DE TABLERO SIN RECARGAR
+  <script>
+  // ── Guardar el ID del tablero actual para los formularios dinámicos ──
+  let tableroActualId = '{{tableroActual.id}}';
+
+  // ── 1. CAMBIAR DE TABLERO SIN RECARGAR ──
   async function cargarTablero(id) {
     try {
-      console.log("Intentando cargar tablero:", id);
-      
-      // Llamada al backend (Asegúrate de que esta ruta devuelva el JSON con includes)
-      const response = await fetch(`/tableros/${id}`);
+      const response = await fetch(`/api/tableros/${id}/data`);
       if (!response.ok) throw new Error("Error en la respuesta del servidor");
-      
-      const tablero = await response.json();
-      console.log("Datos recibidos:", tablero);
 
-      // Actualizar Título
+      const tablero = await response.json();
+      tableroActualId = id;
+
+      // Actualizar título
       document.getElementById('titulo-tablero').textContent = `${tablero.titulo} 🍬`;
 
-      // Actualizar resaltado en el Sidebar
+      // Resaltar tablero activo en sidebar
       document.querySelectorAll('.tablero-selector').forEach(el => {
         el.classList.remove('bg-[#dec8ff]', 'text-primary', 'shadow-sm');
         if (el.dataset.id == id) el.classList.add('bg-[#dec8ff]', 'text-primary', 'shadow-sm');
       });
 
-      // Reconstruir Columnas y Tarjetas
+      // Reconstruir columnas
       const contenedor = document.getElementById('contenedor-columnas');
-      
-      // IMPORTANTE: Usamos 'Listas' y 'Tarjetas' con mayúscula según tus modelos
-      const listas = tablero.Listas || []; 
+      const ORDEN_LISTAS = ['Por hacer', 'Haciendo', 'Hecho'];
+      const listasRaw = tablero.Listas || tablero.Lista || [];
+      const listas = listasRaw.sort((a, b) => {
+        const iA = ORDEN_LISTAS.indexOf(a.titulo);
+        const iB = ORDEN_LISTAS.indexOf(b.titulo);
+        return (iA === -1 ? 99 : iA) - (iB === -1 ? 99 : iB);
+      });
+      const emojis = { 'Por hacer': '🌸', 'Haciendo': '✨', 'Hecho': '💖' };
 
-      if (listas.length === 0) {
-        contenedor.innerHTML = `<p class="text-zinc-400 p-10">Este tablero no tiene listas todavía.</p>`;
-      } else {
-        contenedor.innerHTML = listas.map(lista => {
-          const cards = lista.Cards || [];
-          return `
-            <section class="flex flex-col gap-6 w-80 column-container">
-              <div class="bg-secondary-container/40 p-4 rounded-xl flex items-center justify-between border-b-4 border-secondary-container">
-                <h3 class="font-headline font-black text-on-secondary-container text-lg uppercase">${lista.titulo}</h3>
-                <span class="bg-white/80 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm count-badge">${cards.length}</span>
+      contenedor.innerHTML = listas.map(lista => {
+        const cards = lista.Cards || lista.Card || [];
+        const emoji = emojis[lista.titulo] || '📋';
+        return `
+          <section class="flex flex-col gap-5 column-container">
+            <div class="bg-secondary-container/40 backdrop-blur-sm p-4 rounded-xl flex items-center justify-between border-b-4 border-secondary-container">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl">${emoji}</span>
+                <h3 class="font-headline font-black text-on-secondary-container text-lg uppercase tracking-wider">${lista.titulo}</h3>
               </div>
-              <div class="kanban-column flex flex-col gap-6 min-h-[150px]" data-list-id="${lista.id}">
-                ${cards.map(t => `
-                  <article class="kanban-card bg-white p-6 rounded-xl shadow-md border-2 border-transparent hover:border-primary/20 transition-all" data-card-id="${t.id}">
-                    <div class="flex justify-between items-start mb-4">
-                      <span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-[10px] font-bold uppercase">Tarea</span>
-                      <button class="text-zinc-300 hover:text-error delete-card">
-                        <span class="material-symbols-outlined text-sm">close</span>
-                      </button>
-                    </div>
-                    <h4 class="font-bold text-lg text-on-surface leading-tight">${t.titulo}</h4>
-                    <p class="text-xs text-zinc-500 mt-2">${t.descripcion || ''}</p>
-                  </article>
-                `).join('')}
-              </div>
-            </section>
-          `;
-        }).join('');
-      }
+              <span class="bg-white/80 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm count-badge">${cards.length}</span>
+            </div>
+            <div class="kanban-column flex flex-col gap-5 min-h-[150px]" data-list-id="${lista.id}">
+              ${cards.map(t => `
+                <article class="kanban-card bg-white p-5 rounded-xl shadow-md border-2 border-transparent hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing" data-card-id="${t.id}">
+                  <div class="flex justify-between items-start mb-3">
+                    <span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-[10px] font-bold uppercase">Tarea</span>
+                    <button class="text-zinc-300 hover:text-error delete-card">
+                      <span class="material-symbols-outlined text-sm">close</span>
+                    </button>
+                  </div>
+                  <h4 class="font-bold text-on-surface leading-tight">${t.titulo}</h4>
+                  ${t.descripcion ? `<p class="text-xs text-zinc-500 mt-2">${t.descripcion}</p>` : ''}
+                </article>
+              `).join('')}
+            </div>
+            <form onsubmit="crearTarjeta(event, '${lista.id}')" class="flex flex-col gap-2 p-4 bg-white/50 rounded-xl border-2 border-dashed border-secondary-container/40 hover:border-secondary/40 transition-colors">
+              <input name="titulo" type="text" placeholder="Nueva tarea..." required
+                class="px-4 py-2.5 rounded-lg border border-zinc-200 text-sm focus:outline-none focus:border-primary bg-white placeholder:text-zinc-400" />
+              <button type="submit"
+                class="bg-secondary/10 text-secondary font-bold py-2.5 rounded-lg text-xs hover:bg-secondary/20 transition-colors flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">add_circle</span>
+                Agregar tarea
+              </button>
+            </form>
+          </section>
+        `;
+      }).join('');
 
-      // Reinicializar Drag & Drop para los nuevos elementos inyectados
       initSortable();
-
     } catch (err) {
       console.error("Error al cargar tablero:", err);
-      alert("Hubo un error al cargar el tablero. Revisa la consola.");
     }
   }
 
-  // 2. INICIALIZAR DRAG AND DROP (SortableJS)
+  // ── 2. CREAR TARJETA VIA FETCH (sin recargar la pagina) ──
+  async function crearTarjeta(event, listaId) {
+    event.preventDefault();
+    const form = event.target;
+    const input = form.querySelector('input[name="titulo"]');
+    const titulo = input.value.trim();
+    if (!titulo) return;
+
+    try {
+      const res = await fetch(`/api/tarjetas/lista/${listaId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ titulo })
+      });
+      if (!res.ok) throw new Error('Error al crear tarjeta');
+      const card = await res.json();
+
+      // Insertar la tarjeta en el DOM
+      const column = form.closest('.column-container').querySelector('.kanban-column');
+      const article = document.createElement('article');
+      article.className = 'kanban-card bg-white p-5 rounded-xl shadow-md border-2 border-transparent hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing';
+      article.dataset.cardId = card.id;
+      article.innerHTML = `
+        <div class="flex justify-between items-start mb-3">
+          <span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-[10px] font-bold uppercase">Tarea</span>
+          <button class="text-zinc-300 hover:text-error delete-card">
+            <span class="material-symbols-outlined text-sm">close</span>
+          </button>
+        </div>
+        <h4 class="font-bold text-on-surface leading-tight">${card.titulo}</h4>
+      `;
+      column.appendChild(article);
+      input.value = '';
+      updateCounts();
+    } catch (err) {
+      console.error('Error creando tarjeta:', err);
+    }
+  }
+
+  // ── 3. DRAG AND DROP (SortableJS) ──
   function initSortable() {
-    const columns = document.querySelectorAll('.kanban-column');
-    columns.forEach(column => {
+    document.querySelectorAll('.kanban-column').forEach(column => {
       new Sortable(column, {
         group: 'kanban-shared',
         animation: 150,
@@ -164,47 +240,65 @@
           const cardId = evt.item.dataset.cardId;
           const newListId = evt.to.dataset.listId;
           updateCounts();
-          
-          // Guardar el movimiento en la DB
           try {
-            await fetch(`/api/cards/${cardId}`, {
-              method: 'PATCH',
+            await fetch(`/api/tarjetas/${cardId}`, {
+              method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ listaId: newListId })
             });
-          } catch (e) { console.error("Error guardando posición:", e); }
+          } catch (e) { console.error("Error guardando posicion:", e); }
         }
       });
     });
   }
 
-  // 3. DELEGACIÓN DE EVENTOS (Borrado de tareas)
+  // ── 4. BORRAR TABLERO ──
+  async function eliminarTablero(id, titulo) {
+    if (!confirm(`¿Eliminar el tablero "${titulo}" y todas sus tareas?`)) return;
+    try {
+      const res = await fetch(`/api/tableros/${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Error al eliminar tablero');
+      // Quitar del sidebar
+      const el = document.querySelector(`.tablero-selector[data-id="${id}"]`);
+      if (el) { el.classList.add('scale-0', 'opacity-0'); setTimeout(() => el.remove(), 200); }
+      // Si era el tablero activo, recargar para mostrar otro
+      if (tableroActualId == id) {
+        const siguiente = document.querySelector('.tablero-selector');
+        if (siguiente) {
+          cargarTablero(siguiente.dataset.id);
+        } else {
+          location.reload();
+        }
+      }
+    } catch (err) {
+      console.error('Error eliminando tablero:', err);
+    }
+  }
+
+  // ── 5. BORRAR TARJETAS ──
   document.addEventListener('click', async (e) => {
     const btnDelete = e.target.closest('.delete-card');
     if (btnDelete) {
       const card = btnDelete.closest('.kanban-card');
       const cardId = card.dataset.cardId;
-      
-      if (confirm("¿Seguro que quieres borrar esta tarea?")) {
-        card.remove();
-        updateCounts();
-        await fetch(`/api/cards/${cardId}`, { method: 'DELETE' });
+      if (confirm("Borrar esta tarea?")) {
+        card.classList.add('scale-0', 'opacity-0');
+        setTimeout(() => { card.remove(); updateCounts(); }, 200);
+        await fetch(`/api/tarjetas/${cardId}`, { method: 'DELETE' });
       }
     }
   });
 
-  // 4. ACTUALIZAR CONTADORES DE TAREAS
+  // ── 6. CONTADORES ──
   function updateCounts() {
     document.querySelectorAll('.column-container').forEach(col => {
       const columnEl = col.querySelector('.kanban-column');
       if (columnEl) {
-        const count = columnEl.children.length;
-        col.querySelector('.count-badge').textContent = count;
+        col.querySelector('.count-badge').textContent = columnEl.children.length;
       }
     });
   }
 
-  // Ejecutar al cargar la página por primera vez
   document.addEventListener('DOMContentLoaded', initSortable);
-</script>
+  </script>
 </body>
