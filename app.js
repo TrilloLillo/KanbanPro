@@ -188,3 +188,5 @@ sequelize.sync().then(() => {
 }).catch((err) => {
   console.error('Error al sincronizar la base de datos:', err);
 });
+
+module.exports = app; // Exportar app para pruebas unitarias
