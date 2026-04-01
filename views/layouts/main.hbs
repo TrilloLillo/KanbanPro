@@ -2,7 +2,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KanbanPro - The Sweetest Way to Manage Your Day</title>
+<title>KanbanPro - La manera más dulce de llevar a cabo tus tareas</title>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <!-- Material Symbols -->
@@ -105,9 +105,10 @@
         </div>
 <div class="hidden md:flex items-center gap-8 font-headline font-bold text-lg tracking-tight">
 <a class="text-zinc-400 hover:bg-[#fe84d0]/10 px-4 py-1 rounded-full transition-all duration-300" href="/">Inicio</a>
-<a class="text-zinc-400 hover:bg-[#fe84d0]/10 px-4 py-1 rounded-full transition-all duration-300" href="/dashboard">Mi tablero</a>
+{{#if user.name}}
+<a class="text-zinc-400 hover:bg-[#fe84d0]/10 px-4 py-1 rounded-full transition-all duration-300" href="/dashboard">Mis tableros</a>{{/if}}
 <a class="text-zinc-400 hover:bg-[#fe84d0]/10 px-4 py-1 rounded-full transition-all duration-300" href="/login">Login</a>
-<a class="text-zinc-400 hover:bg-[#fe84d0]/10 px-4 py-1 rounded-full transition-all duration-300" href="/register">Registrate</a>
+<a class="text-zinc-400 hover:bg-[#fe84d0]/10 px-4 py-1 rounded-full transition-all duration-300" href="/register">Regístrate</a>
 </div>
 </nav>
 
@@ -125,10 +126,10 @@
 <p class="text-on-tertiary-container/80 max-w-xs">Haciendo el mundo más dulce una tarea a la vez.</p>
 </div>
 <div class="flex gap-8">
-<a class=" p-2 bg-white rounded-full flex items-center justify-center text-secondary shadow-sm hover:scale-110 transition-all" href="#">
+<a class=" p-2 bg-white rounded-full flex items-center justify-center text-secondary shadow-sm hover:scale-110 transition-all" href="https://github.com/TrilloLillo/KanbanPro">
 <p>Repositorio</p>
 </a>
-<a class="p-2 bg-white rounded-full flex items-center justify-center text-secondary shadow-sm hover:scale-110 transition-all" href="#">
+<a class="p-2 bg-white rounded-full flex items-center justify-center text-secondary shadow-sm hover:scale-110 transition-all" href="https://trillolillo.dev">
 <p>Portafolio</p>
 </a>
 </div>
